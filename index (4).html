@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virexo Technologies — Web, App & Digital Growth, Worldwide</title>
+<meta name="description" content="Virexo Technologies builds websites and apps, and grows brands globally through SEO, Google Ads, digital marketing and social media management.">
+
+<style>
+:root{
+  --bg:#ffffff; --bg-alt:#f5f5f7; --bg-dark:#000000;
+  --text:#1d1d1f; --text-soft:#6e6e73; --text-invert:#f5f5f7;
+  --accent:#0071e3; --accent-dark:#0059b3; --accent-soft:#e8f2fd;
+  --gold:#d4af37; --gold-soft:rgba(212,175,55,0.35); --gold-glow:rgba(212,175,55,0.18);
+  --line:rgba(0,0,0,0.08); --line-dark:rgba(255,255,255,0.14);
+  --radius-lg:28px; --radius-md:18px; --maxw:1200px; --nav-h:56px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html.dark{
+  --bg:#0a0a0d; --bg-alt:#131318; --text:#f5f5f7; --text-soft:#9a9aa0;
+  --line:rgba(255,255,255,0.1); --accent-soft:rgba(0,113,227,0.15);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+body{margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); transition:background .3s var(--ease), color .3s var(--ease); overflow-x:hidden;}
+html[dir="rtl"] body{ font-family:"Tahoma","Segoe UI",-apple-system,sans-serif; }
+a{color:inherit; text-decoration:none;} img{max-width:100%; display:block;} ul{margin:0; padding:0; list-style:none;} h1,h2,h3,h4,p{margin:0;} button{font-family:inherit;}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+.eyebrow{font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--accent); text-transform:uppercase;}
+h1{font-size:clamp(38px,6vw,80px); font-weight:700; letter-spacing:-0.03em; line-height:1.03;}
+h2{font-size:clamp(28px,4vw,46px); font-weight:700; letter-spacing:-0.02em; line-height:1.08;}
+h3{font-size:clamp(19px,2.2vw,24px); font-weight:600; letter-spacing:-0.01em; line-height:1.25;}
+.lead{font-size:clamp(17px,2vw,22px); color:var(--text-soft); font-weight:400; line-height:1.55;}
+.body-text{font-size:16px; color:var(--text-soft); line-height:1.6;}
+
+/* nav */
+.nav{position:fixed; top:0; left:0; right:0; z-index:1000; height:var(--nav-h); display:flex; align-items:center; background:rgba(255,255,255,0.72); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); transition:background .3s var(--ease);}
+html.dark .nav{ background:rgba(10,10,13,0.72); }
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px;}
+.brand{display:flex; align-items:center; gap:8px; font-weight:600; font-size:15px; letter-spacing:-0.01em; white-space:nowrap;}
+/* 🔶 This ".mark" square is the placeholder logo — see the two "LOGO HERE"
+   comments in the HTML body (nav + footer) for how to swap in a real image. */
+.brand .mark{width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,var(--accent),#5ac8fa); display:inline-block; flex:none;}
+.nav-links{display:flex; align-items:center; gap:26px;}
+.nav-links a{font-size:13px; opacity:.8; font-weight:500; transition:opacity .2s var(--ease); white-space:nowrap;}
+.nav-links a:hover, .nav-links a.active{opacity:1; color:var(--accent);}
+.nav-cta{background:var(--text); color:var(--bg) !important; opacity:1 !important; padding:7px 16px; border-radius:980px; font-size:13px;}
+.nav-cta:hover{background:var(--accent); color:#fff !important;}
+.nav-tools{display:flex; align-items:center; gap:8px;}
+.icon-btn{width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px; transition:.2s var(--ease); flex:none;}
+.icon-btn:hover{border-color:var(--accent); color:var(--accent);}
+.lang-wrap{position:relative;}
+.lang-menu{position:absolute; top:calc(100% + 8px); right:0; background:var(--bg); border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 30px rgba(0,0,0,.12); min-width:140px; overflow:hidden; display:none; z-index:50;}
+html[dir="rtl"] .lang-menu{ right:auto; left:0; }
+.lang-menu.open{display:block;}
+.lang-menu button{width:100%; text-align:left; padding:10px 16px; font-size:13px; background:none; border:none; cursor:pointer; color:var(--text);}
+html[dir="rtl"] .lang-menu button{ text-align:right; }
+.lang-menu button:hover{background:var(--bg-alt); color:var(--accent);}
+.nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+.nav-toggle span{display:block; width:20px; height:2px; background:var(--text); margin:4px 0; transition:.25s var(--ease);}
+.scroll-progress{position:fixed; top:var(--nav-h); left:0; height:2px; width:0%; z-index:999; background:linear-gradient(90deg, var(--accent), var(--gold)); transition:width .1s linear;}
+@media (max-width:980px){
+  .nav-links{position:fixed; top:var(--nav-h); left:0; right:0; flex-direction:column; align-items:stretch; gap:0; background:var(--bg); border-bottom:1px solid var(--line); max-height:0; overflow:hidden; transition:max-height .35s var(--ease);}
+  .nav-links.open{max-height:420px;}
+  .nav-links a{padding:16px 24px; border-bottom:1px solid var(--line); opacity:1;}
+  .nav-cta{margin:16px 24px; text-align:center;}
+  .nav-toggle{display:block;}
+}
+
+/* buttons */
+.btn{display:inline-flex; align-items:center; gap:6px; padding:12px 24px; border-radius:980px; font-size:15px; font-weight:500; cursor:pointer; border:1px solid transparent; transition:transform .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);}
+.btn:hover{transform:translateY(-1px);}
+.btn-primary{background:var(--accent); color:#fff;}
+.btn-primary:hover{background:var(--accent-dark);}
+.btn-ghost{border-color:var(--line); color:var(--text);}
+.btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+.btn-invert{background:#fff; color:#000;}
+.btn-invert:hover{background:var(--accent-soft);}
+.btn-outline-invert{border-color:var(--line-dark); color:#fff;}
+.btn-outline-invert:hover{border-color:#fff;}
+
+/* sections */
+section{padding:110px 0; position:relative;}
+.section-tight{padding:70px 0;}
+.alt{background:var(--bg-alt);}
+.center{text-align:center;}
+.section-head{max-width:720px; margin:0 auto 56px; text-align:center;}
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+/* hero */
+.hero{position:relative; overflow:hidden; min-height:100vh; display:flex; align-items:center; justify-content:center; padding-top:var(--nav-h); background:#050505; color:#fff;}
+.hero .wrap{position:relative; z-index:5; width:100%; max-width:1400px; margin:0 auto; padding:80px 60px; display:flex; align-items:center; justify-content:space-between; gap:70px;}
+
+/* LEFT SIDE */
+.hero-left{flex:1; max-width:620px;}
+.hero-tag{display:inline-flex; align-items:center; padding:8px 18px; border:1px solid rgba(255,122,0,.35); border-radius:50px; background:rgba(255,122,0,.08); color:#ff8a1c; font-size:13px; font-weight:600; letter-spacing:3px; text-transform:uppercase; margin-bottom:25px;}
+.hero h1{font-size:72px; line-height:1.08; font-weight:800; margin:0 0 28px; letter-spacing:-2px;}
+.hero h1 .highlight{background:linear-gradient(90deg,#ff7a00,#ffb347,#ffd26a); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.hero .lead{font-size:19px; line-height:1.8; color:rgba(255,255,255,.72); margin-bottom:45px; max-width:560px;}
+
+/* SERVICE BOX */
+.service-box{position:relative; margin-top:40px; padding:35px; border-radius:24px; background:rgba(255,255,255,.04); border:1px solid rgba(255,122,0,.10); backdrop-filter:blur(18px); overflow:hidden; transition:.45s ease; box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.service-box::before{content:""; position:absolute; inset:0; background:linear-gradient(130deg, rgba(255,122,0,.08), transparent 45%, transparent 65%, rgba(255,122,0,.05)); opacity:0; transition:.45s;}
+.service-box:hover{transform:translateY(-8px); border-color:rgba(255,122,0,.35); box-shadow:0 30px 80px rgba(255,122,0,.12);}
+.service-box:hover::before{opacity:1;}
+.service-box::after{content:""; position:absolute; width:180px; height:180px; right:-70px; top:-70px; border-radius:50%; background:radial-gradient(circle, rgba(255,122,0,.12), transparent 70%);}
+.service-heading{font-size:13px; letter-spacing:4px; color:#ff8a1c; text-transform:uppercase; margin-bottom:15px;}
+#serviceTitle{font-size:34px; margin-bottom:25px; color:#fff;}
+.services-list{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+.services-list li{position:relative; padding-left:28px; color:rgba(255,255,255,.75); transition:.35s; cursor:pointer;}
+.services-list li::before{content:"✓"; position:absolute; left:0; top:0; width:18px; height:18px; border-radius:50%; background:rgba(255,122,0,.14); color:#ff8a1c; font-size:11px; font-weight:700; line-height:18px; text-align:center; box-shadow:0 0 10px rgba(255,122,0,.35);}
+.services-list li:hover{color:#fff; transform:translateX(6px);}
+.services-list li:hover::before{background:#ff7a00; color:#050505;}
+.services-list li.active{color:#fff; font-weight:600;}
+.services-list li.active::before{background:#ff7a00; color:#050505;}
+
+/* BUTTONS */
+.hero-ctas{margin-top:40px; display:flex; gap:18px; flex-wrap:wrap;}
+.hero-ctas a{min-width:180px; justify-content:center; align-items:center; display:inline-flex;}
+.hero-ctas .btn-primary{position:relative; overflow:hidden; border-radius:50px; transition:.4s; box-shadow:0 15px 35px rgba(255,122,0,.22);}
+.hero-ctas .btn-primary::before{content:""; position:absolute; top:0; left:-120%; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent); transition:.7s;}
+.hero-ctas .btn-primary:hover::before{left:120%;}
+.hero-ctas .btn-primary:hover{transform:translateY(-4px); box-shadow:0 15px 35px rgba(255,122,0,.35);}
+.hero-ctas .btn-outline-invert{transition:.4s;}
+.hero-ctas .btn-outline-invert:hover{transform:translateY(-4px);}
+
+/* RIGHT SIDE */
+.hero-right{flex:1; display:flex; justify-content:center; align-items:center; position:relative; min-height:700px;}
+
+/* BACKGROUND */
+.hero-bg{position:absolute; inset:0; overflow:hidden; z-index:0; background:radial-gradient(circle at 80% 35%, rgba(255,122,0,.20), transparent 45%), radial-gradient(circle at 20% 70%, rgba(255,122,0,.10), transparent 45%), linear-gradient(180deg, #050505, #090909, #050505);}
+.hero-blob{position:absolute; border-radius:50%; filter:blur(120px); opacity:.45;}
+.hero-blob.b1{width:650px; height:650px; background:#ff7a00; top:-180px; right:-150px; animation:blobOne 18s ease-in-out infinite alternate;}
+.hero-blob.b2{width:500px; height:500px; background:#ff9500; bottom:-150px; left:-100px; animation:blobTwo 20s ease-in-out infinite alternate;}
+.hero-blob.b3{width:350px; height:350px; background:#ffb347; top:35%; left:45%; opacity:.18; animation:blobThree 14s ease-in-out infinite alternate;}
+@keyframes blobOne{ to{ transform:translate(-80px,60px) scale(1.2);} }
+@keyframes blobTwo{ to{ transform:translate(90px,-60px) scale(.85);} }
+@keyframes blobThree{ to{ transform:translate(-50px,50px) scale(1.3);} }
+
+.hero-grain{position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.05; background-image:radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px); background-size:3px 3px;}
+.hero-vignette{position:absolute; inset:0; z-index:2; pointer-events:none; background:radial-gradient(circle at 50% 40%, transparent 40%, rgba(0,0,0,.55) 100%);}
+.stars-layer{position:absolute; inset:0; z-index:1; pointer-events:none;}
+.stars-layer .star{position:absolute; border-radius:50%; background:#fff; opacity:0; animation-name:twinkle; animation-timing-function:ease-in-out; animation-iteration-count:infinite;}
+@keyframes twinkle{ 0%,100%{opacity:0;} 50%{opacity:.85;} }
+.cursor-glow{position:absolute; top:0; left:0; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(255,150,40,.16), transparent 70%); transform:translate(-50%,-50%); pointer-events:none; z-index:2; transition:transform .12s linear;}
+
+/* ORBIT AREA */
+.orbit-stage{position:relative; width:650px; height:650px; display:flex; align-items:center; justify-content:center; isolation:isolate; margin:auto;}
+.orbit-stage::before{content:""; position:absolute; width:650px; height:650px; border-radius:50%; background:radial-gradient(circle, rgba(255,122,0,.10), transparent 70%); filter:blur(70px); animation:lightPulse 5s ease-in-out infinite; z-index:0; pointer-events:none;}
+.orbit-stage::after{content:""; position:absolute; inset:0; background-image:radial-gradient(#ff7a00 1px, transparent 1px); background-size:45px 45px; opacity:.08; animation:sparkMove 20s linear infinite; pointer-events:none;}
+@keyframes lightPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.08);} }
+@keyframes sparkMove{ from{ transform:translateY(0);} to{ transform:translateY(-60px);} }
+
+.ring-glow, .orbit-stage .ring-glow{position:absolute; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(255,122,0,.35), transparent 70%); filter:blur(40px); animation:centerGlow 4s ease-in-out infinite; z-index:2;}
+@keyframes centerGlow{ 0%,100%{ opacity:.45; transform:scale(1);} 50%{ opacity:1; transform:scale(1.12);} }
+
+.orbit-ring{position:absolute; border-radius:50%; border:1.5px solid rgba(255,122,0,.22);}
+.orbit-ring.r1{width:520px; height:520px; animation:ringRotate1 28s linear infinite; box-shadow:0 0 25px rgba(255,122,0,.18);}
+.orbit-ring.r2{width:430px; height:430px; border-style:dashed; animation:ringRotate2 18s linear infinite reverse;}
+.orbit-ring.r3{width:340px; height:340px; border-color:rgba(255,170,0,.55); animation:ringRotate3 12s linear infinite; box-shadow:0 0 18px rgba(255,122,0,.35);}
+
+.orbit-ring-outer{position:absolute; width:590px; height:590px; border-radius:50%; animation:ringLight 9s linear infinite;}
+.orbit-ring-outer::before{content:""; position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:16px; height:16px; border-radius:50%; background:#ff7a00; box-shadow:0 0 18px #ff7a00, 0 0 40px #ff7a00, 0 0 80px rgba(255,122,0,.8);}
+.orbit-ring-inner{position:absolute; width:390px; height:390px; border-radius:50%; animation:ringLightReverse 6s linear infinite reverse;}
+.orbit-ring-inner::before{content:""; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%); width:12px; height:12px; border-radius:50%; background:#ffd46a; box-shadow:0 0 20px #ffb347, 0 0 45px #ff7a00;}
+
+@keyframes ringRotate1{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+@keyframes ringRotate2{ from{ transform:rotate(360deg);} to{ transform:rotate(0deg);} }
+@keyframes ringRotate3{ from{ transform:rotate(0deg) scale(1);} 50%{ transform:rotate(180deg) scale(1.03);} to{ transform:rotate(360deg) scale(1);} }
+@keyframes ringLight{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+@keyframes ringLightReverse{ from{ transform:rotate(360deg);} to{ transform:rotate(0deg);} }
+
+/* STATUE */
+.hero-statue{position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:440px; max-width:100%; height:auto; object-fit:contain; z-index:20; pointer-events:none; user-select:none; filter:drop-shadow(0 0 35px rgba(255,122,0,.40)) drop-shadow(0 0 90px rgba(255,122,0,.20)) grayscale(.05) contrast(1.05); animation:statueFloat 6s ease-in-out infinite;}
+.hero-statue-shadow{position:absolute; bottom:-6px; left:50%; transform:translateX(-50%); width:220px; height:35px; background:rgba(0,0,0,.45); border-radius:50%; filter:blur(18px); z-index:19;}
+@keyframes statueFloat{ 0%,100%{ transform:translateX(-50%) translateY(0px);} 25%{ transform:translateX(-50%) translateY(-10px);} 50%{ transform:translateX(-50%) translateY(-18px);} 75%{ transform:translateX(-50%) translateY(-8px);} }
+.hero:hover .hero-statue{ transform:translateX(-50%) translateY(-12px) scale(1.02); filter:drop-shadow(0 0 40px rgba(255,122,0,.45)) drop-shadow(0 0 90px rgba(255,122,0,.25));}
+
+/* FLOATING PARTICLES */
+.light{position:absolute; border-radius:50%; background:#ff7a00; box-shadow:0 0 15px #ff7a00, 0 0 35px #ff7a00; animation:particleFloat linear infinite;}
+.l1{width:8px; height:8px; left:18%; top:25%; animation-duration:9s;}
+.l2{width:12px; height:12px; right:16%; top:38%; animation-duration:12s; animation-delay:1s;}
+.l3{width:6px; height:6px; left:30%; bottom:18%; animation-duration:8s; animation-delay:2s;}
+.l4{width:10px; height:10px; right:24%; bottom:25%; animation-duration:10s; animation-delay:3s;}
+@keyframes particleFloat{ 0%{ transform:translateY(0) scale(1); opacity:0;} 20%{ opacity:1;} 80%{ opacity:1;} 100%{ transform:translateY(-120px) scale(1.6); opacity:0;} }
+
+/* ORBIT NODES (built by JS buildOrbit) */
+.orbit-node-holder{position:absolute; top:50%; left:50%; width:0; height:0;}
+.orbit-node-inner{position:absolute; top:-265px; left:0; transform:translate(-50%,-50%);}
+.orbit-node{width:54px; height:54px; border-radius:50%; background:rgba(255,255,255,.06); border:1px solid rgba(255,122,0,.35); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 0 20px rgba(255,122,0,.25);}
+.orbit-node.counter-normal{animation:counterspin 28s linear infinite;}
+.orbit-node.counter-reverse{animation:counterspin 18s linear infinite reverse;}
+@keyframes counterspin{ from{transform:rotate(0deg);} to{transform:rotate(-360deg);} }
+#orbitOuter .orbit-node-inner{ top:-295px; }
+#orbitInner .orbit-node-inner{ top:-195px; }
+@media (max-width:600px){ .orbit-node{width:42px; height:42px; font-size:17px;} }
+
+/* SCROLL CUE */
+.hero-scroll-cue{position:absolute; left:50%; bottom:28px; transform:translateX(-50%); z-index:6; display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,122,0,.85); opacity:.85; animation:scrollCueFloat 2.4s ease-in-out infinite;}
+.hero-scroll-cue .wheel{width:26px; height:42px; border:1.5px solid rgba(255,122,0,.65); border-radius:20px; position:relative;}
+.hero-scroll-cue .wheel::before{content:""; position:absolute; top:7px; left:50%; width:4px; height:8px; background:#ff8a1c; border-radius:2px; transform:translateX(-50%); animation:wheelDot 1.8s ease-in-out infinite;}
+@keyframes wheelDot{ 0%{ opacity:1; top:7px;} 60%{ opacity:0; top:22px;} 100%{ opacity:0; top:7px;} }
+@keyframes scrollCueFloat{ 0%,100%{ transform:translate(-50%,0);} 50%{ transform:translate(-50%,6px);} }
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero .wrap{flex-direction:column; text-align:center; padding:70px 35px;}
+  .hero-left{max-width:100%;}
+  .hero-right{min-height:500px; margin-top:40px;}
+  .hero .lead{margin-left:auto; margin-right:auto;}
+  .hero-ctas{justify-content:center;}
+  .services-list{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:1024px){
+  .hero .wrap{padding:70px 40px; gap:40px;}
+  .hero h1{font-size:56px;}
+  .hero .lead{font-size:18px;}
+  .orbit-stage{width:520px; height:520px;}
+  .hero-statue{width:350px;}
+}
+@media(max-width:992px){
+  .orbit-stage{width:480px; height:480px;}
+  .orbit-ring.r1{width:390px; height:390px;}
+  .orbit-ring.r2{width:320px; height:320px;}
+  .orbit-ring.r3{width:250px; height:250px;}
+  .hero-statue{width:320px;}
+}
+@media(max-width:768px){
+  .hero{min-height:auto; padding-top:120px; padding-bottom:80px;}
+  .hero .wrap{display:flex; flex-direction:column-reverse; align-items:center; text-align:center; padding:40px 20px; gap:50px;}
+  .hero-left{width:100%; max-width:100%;}
+  .hero-right{width:100%; display:flex; justify-content:center; min-height:auto;}
+  .hero h1{font-size:42px; line-height:1.2;}
+  .hero .lead{font-size:16px; margin:20px auto 30px;}
+  .service-box{padding:25px;}
+  .services-list{grid-template-columns:1fr; gap:14px;}
+  .hero-ctas{justify-content:center; flex-direction:column; width:100%;}
+  .hero-ctas a{width:100%;}
+  .orbit-stage{width:340px; height:340px;}
+  .hero-statue{width:230px;}
+  .orbit-ring.r1{width:280px; height:280px;}
+  .orbit-ring.r2{width:220px; height:220px;}
+  .orbit-ring.r3{width:170px; height:170px;}
+}
+@media(max-width:480px){
+  .hero .wrap{padding:30px 16px;}
+  .hero h1{font-size:32px;}
+  .hero-tag{font-size:11px; letter-spacing:2px; padding:6px 14px;}
+  .hero .lead{font-size:15px;}
+  #serviceTitle{font-size:24px;}
+  .service-box{padding:20px; border-radius:18px;}
+  .services-list li{font-size:15px;}
+  .orbit-stage{width:260px; height:260px;}
+  .hero-statue{width:180px;}
+  .orbit-ring.r1{width:210px; height:210px;}
+  .orbit-ring.r2{width:170px; height:170px;}
+  .orbit-ring.r3{width:130px; height:130px;}
+}
+@media (min-width:1600px){
+  .hero .wrap{max-width:1500px;}
+  .hero h1{font-size:86px;}
+  .hero-statue{width:500px;}
+  .orbit-stage{width:760px; height:760px;}
+  .orbit-ring.r1{width:620px; height:620px;}
+  .orbit-ring.r2{width:520px; height:520px;}
+  .orbit-ring.r3{width:420px; height:420px;}
+}
+
+/* grid & cards */
+.grid{display:grid; gap:20px;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+@media (max-width:980px){ .grid-3,.grid-4{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:640px){ .grid-3,.grid-2,.grid-4{grid-template-columns:1fr;} }
+.card{background:var(--bg-alt); border-radius:var(--radius-md); overflow:hidden; transition:transform .35s var(--ease), box-shadow .35s var(--ease); border:1px solid transparent; position:relative;}
+.card::before{content:""; position:absolute; inset:0; border-radius:inherit; padding:1.5px; background:conic-gradient(from 0deg, transparent 0deg, transparent 35deg, var(--accent) 45deg, transparent 55deg, transparent 125deg, var(--gold) 135deg, transparent 145deg, transparent 215deg, var(--accent) 225deg, transparent 235deg, transparent 305deg, var(--gold) 315deg, transparent 325deg, transparent 360deg); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:beamRotate 6s linear infinite; opacity:.85; pointer-events:none; z-index:2;}
+@keyframes beamRotate{ to{ transform:rotate(360deg); } }
+.card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,.10);}
+.card-body{padding:28px 26px;}
+.card .icon{width:48px; height:48px; border-radius:13px; margin-bottom:18px; display:flex; align-items:center; justify-content:center; font-size:22px; background:linear-gradient(135deg,var(--accent),#5ac8fa); color:#fff;}
+.card h3{margin-bottom:8px;}
+.card p{color:var(--text-soft); font-size:14.5px; line-height:1.55;}
+.card-media{position:relative; width:100%; height:170px; overflow:hidden;}
+.card-media img{width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease);}
+.card:hover .card-media img{transform:scale(1.08);}
+.tag-pill{display:inline-block; font-size:12px; padding:6px 12px; border-radius:980px; background:var(--bg); border:1px solid var(--line); color:var(--text-soft); margin-bottom:10px;}
+/* project cards */
+.proj-card{position:relative; border-radius:var(--radius-md); overflow:hidden; background:var(--bg-alt);}
+.proj-media{position:relative; height:210px; overflow:hidden;}
+.proj-media img{width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease);}
+.proj-card:hover .proj-media img{transform:scale(1.1);}
+.proj-badge{position:absolute; top:14px; left:14px; font-size:11px; padding:6px 12px; border-radius:980px; background:rgba(0,0,0,.6); color:#fff; backdrop-filter:blur(4px);}
+html[dir="rtl"] .proj-badge{ left:auto; right:14px; }
+.proj-country{position:absolute; bottom:14px; right:14px; font-size:11px; padding:6px 12px; border-radius:980px; background:rgba(255,255,255,.85); color:#000; backdrop-filter:blur(4px);}
+html[dir="rtl"] .proj-country{ right:auto; left:14px; }
+.proj-body{padding:22px;}
+
+/* reviews */
+.review-card{background:var(--bg-alt); border-radius:var(--radius-md); padding:24px; display:flex; flex-direction:column; gap:12px;}
+.stars{display:flex; gap:3px; color:#f5a623; font-size:15px;}
+.review-who{display:flex; align-items:center; gap:10px; margin-top:auto; padding-top:6px;}
+.review-avatar{width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--accent),#5ac8fa); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:13px;}
+.star-input{display:flex; gap:6px; cursor:pointer;}
+.star-input span{font-size:24px; color:#d0d0d5; transition:color .15s;}
+html.dark .star-input span{color:#3a3a40;}
+.star-input span.active{color:#f5a623;}
+
+/* founder / about */
+.founder-card{display:grid; grid-template-columns:230px 1fr; gap:40px; align-items:center; background:var(--bg-alt); border-radius:var(--radius-lg); padding:44px;}
+@media (max-width:760px){ .founder-card{grid-template-columns:1fr; text-align:center;} }
+
+.founder-card .role{color:var(--accent); font-weight:600; font-size:13px; margin-bottom:6px;}
+
+/* media row */
+.media-row{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+.media-row.rev{direction:rtl;} .media-row.rev > *{direction:ltr;}
+html[dir="rtl"] .media-row.rev{ direction:ltr; }
+@media (max-width:860px){ .media-row, .media-row.rev{grid-template-columns:1fr; direction:ltr;} }
+.media-row img{border-radius:var(--radius-lg); width:100%; height:100%; object-fit:cover; aspect-ratio:4/3;}
+.stat-strip{display:flex; gap:44px; margin-top:26px; flex-wrap:wrap;}
+.stat-strip .num{font-size:32px; font-weight:700; letter-spacing:-0.02em;}
+.stat-strip .lbl{font-size:13px; color:var(--text-soft);}
+
+/* banner */
+.banner{position:relative; border-radius:var(--radius-lg); overflow:hidden; min-height:340px; display:flex; align-items:flex-end;}
+.banner img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+.banner::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.75) 100%);}
+.banner-content{position:relative; z-index:2; padding:40px; color:#fff;}
+
+/* logo marquee */
+.marquee-wrap{overflow:hidden; position:relative; padding:44px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.marquee-track{display:flex; gap:20px; width:max-content; animation:marquee 26s linear infinite;}
+@keyframes marquee{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.logo-chip{
+    flex:none;
+    width:180px;
+    height:64px;
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0 12px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.95);
+
+    border:1px solid rgba(220,220,220,.7);
+
+    font-size:13px;
+    font-weight:600;
+    text-align:center;
+    color:var(--text-soft);
+
+    isolation:isolate;
+
+    transition:.4s ease;
+
+    box-shadow:
+    0 4px 15px rgba(0,0,0,.05);
+}
+
+/* Animated RGB Glow */
+.logo-chip::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:inherit;
+
+    background:linear-gradient(
+        90deg,
+        #a855f7,
+        #3b82f6,
+        #06b6d4,
+        #22c55e,
+        #f59e0b,
+        #ef4444,
+        #a855f7
+    );
+
+    background-size:400% 400%;
+
+    animation:rgbGlow 6s linear infinite;
+
+    filter:blur(18px);
+
+    opacity:.35;
+
+    z-index:-1;
+}
+
+.logo-chip:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08),
+        0 0 25px rgba(59,130,246,.18);
+}
+
+.logo-chip:nth-child(1){color:#37006b;}
+.logo-chip:nth-child(2){color:#0a1a3d;}
+.logo-chip:nth-child(3){color:#092513;}
+.logo-chip:nth-child(4){color:#550808;}
+.logo-chip:nth-child(5){color:#3d1483;}
+.logo-chip:nth-child(6){color:#05404b;}
+
+@keyframes rgbGlow{
+    0%{background-position:0% 50%;}
+    100%{background-position:400% 50%;}
+}
+/* CTA band */
+.cta-band{border-radius:var(--radius-lg); padding:64px 36px; text-align:center; position:relative; overflow:hidden; background:linear-gradient(135deg,#000 0%,#0a1526 45%,#00305e 80%,#0a1526 100%); background-size:220% 220%; animation:ctaShift 14s ease-in-out infinite; color:#fff;}
+.cta-band::before{content:""; position:absolute; inset:0; background:radial-gradient(circle at 85% 15%, rgba(212,175,55,.16), transparent 55%); pointer-events:none;}
+.cta-band > *{position:relative; z-index:1;}
+@keyframes ctaShift{ 0%,100%{ background-position:0% 50%;} 50%{ background-position:100% 50%;} }
+@media (prefers-reduced-motion: reduce){ .cta-band{animation:none;} }
+.cta-band h2{margin-bottom:14px;} .cta-band .lead{margin-bottom:28px;}
+
+/* footer */
+footer{background:var(--bg-alt); border-top:1px solid var(--line); padding:52px 0 26px; font-size:13px; color:var(--text-soft);}
+.foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:30px;}
+@media (max-width:760px){ .foot-grid{grid-template-columns:1fr 1fr;} }
+.foot-grid h4{color:var(--text); font-size:13px; font-weight:600; margin-bottom:14px;}
+.foot-grid li{margin-bottom:9px;}
+.foot-grid a:hover{color:var(--accent);}
+.foot-bottom{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); margin-top:36px; padding-top:22px; flex-wrap:wrap; gap:12px;}
+.social-row{display:flex; gap:12px;}
+.social-row a{width:32px; height:32px; border-radius:50%; background:var(--bg); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;}
+
+/* contact */
+.contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px;}
+@media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+.contact-list li{display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--line);}
+.contact-list .ic{width:40px; height:40px; border-radius:12px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:16px; flex:none;}
+.contact-list .lbl{font-size:12px; color:var(--text-soft);}
+.contact-list .val{font-size:15px; font-weight:500;}
+form.form{display:flex; flex-direction:column; gap:16px;}
+.form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media (max-width:560px){ .form-row{grid-template-columns:1fr;} }
+.field{display:flex; flex-direction:column; gap:7px;}
+.field label{font-size:13px; font-weight:500; color:var(--text-soft);}
+.field input, .field select, .field textarea{border:1px solid var(--line); border-radius:12px; padding:12px 15px; font-size:14.5px; background:var(--bg); color:var(--text); font-family:inherit;}
+.field input:focus, .field select:focus, .field textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 4px var(--accent-soft);}
+.field textarea{resize:vertical; min-height:120px;}
+.form-note{font-size:12.5px; color:var(--text-soft);}
+.form-status{font-size:14px; margin-top:2px; color:var(--accent); display:none;}
+.form-status.show{display:block;}
+.quote-card{background:var(--bg-alt); border-radius:var(--radius-md); padding:28px;}
+
+/* auto-rotating testimonial spotlight */
+.testimonial-spotlight{position:relative; max-width:760px; margin:0 auto 50px; text-align:center; padding:40px 32px; border-radius:var(--radius-md); background:linear-gradient(135deg, rgba(0,113,227,.06), rgba(212,175,55,.06)); border:1px solid var(--line); min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;}
+.spotlight-quote{font-size:18px; line-height:1.6; color:var(--text); transition:opacity .4s ease, transform .4s ease;}
+.spotlight-quote .who{display:block; margin-top:14px; font-size:13px; color:var(--text-soft); font-weight:600;}
+.spotlight-quote .stars{justify-content:center; margin-bottom:10px;}
+.spotlight-dots{display:flex; gap:7px;}
+.spotlight-dots span{width:6px; height:6px; border-radius:50%; background:var(--line); cursor:pointer; transition:background .2s, transform .2s;}
+.spotlight-dots span.active{background:var(--accent); transform:scale(1.3);}
+
+
+.divider{height:1px; background:var(--line); margin:50px 0;}
+[data-i18n-hidden]{display:none;}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap">
+    <!-- 🔶 LOGO HERE (nav): replace the <span class="mark"></span> below with
+         <img src="your-logo.png" style="width:20px;height:20px;border-radius:6px;object-fit:contain;">
+         to use your own logo image instead of the plain color square. -->
+    <a href="#home" class="brand"><img src="logo.png" alt="Virexo Logo" style="width:30px;height:30px;border-radius:6px;object-fit:contain;"> <span data-i18n="brand">Virexo Technologies</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="#contact" class="nav-cta" data-i18n="nav.cta">Get a Quote</a>
+    </div>
+    <div class="nav-tools">
+      <div class="lang-wrap">
+        <button class="icon-btn" id="langBtn" aria-label="Language" title="Language">🌐</button>
+        <div class="lang-menu" id="langMenu"></div>
+      </div>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ============ HOME / HERO ============ -->
+<header class="hero" id="home">
+
+    <!-- Background -->
+    <div class="hero-bg" aria-hidden="true">
+        <div class="hero-blob b1"></div>
+        <div class="hero-blob b2"></div>
+        <div class="hero-blob b3"></div>
+    </div>
+
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <div class="stars-layer" id="starsLayer"></div>
+
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <div class="wrap">
+
+        <!-- LEFT SIDE -->
+        <div class="hero-left">
+
+            <span class="hero-tag">
+                DIGITAL AGENCY
+            </span>
+
+            <h1>
+
+                Grow Your Business <br>
+
+                with
+
+                <span class="highlight">
+
+                    Digital Solutions
+
+                </span>
+
+            </h1>
+
+            <p class="lead">
+
+                We help startups and businesses grow with
+                Digital Marketing, SEO, Web Development,
+                Branding and Creative Solutions.
+
+            </p>
+
+            <div class="service-box">
+
+                <p class="service-heading">
+
+                    WHAT WE DO
+
+                </p>
+
+                <h2 id="serviceTitle">
+
+                    Our Services
+                </h2>
+
+                <ul class="services-list">
+
+                    <li class="active">SEO Agency</li>
+                    <li>Web Development</li>
+                    <li>Graphic Design</li>
+                    <li>Social Media Marketing</li>
+                    <li>Branding</li>
+                    <li>App Development</li>
+                    <li>UI / UX Design</li>
+                    <li>AI Automation</li>
+
+                </ul>
+
+            </div>
+
+            <div class="hero-ctas">
+
+                <a href="#contact" class="btn btn-primary">Get Started</a>
+
+                <a href="#services" class="btn btn-outline-invert">Explore Services</a>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="hero-right">
+
+            <div class="orbit-stage">
+
+                <div class="ring-glow"></div>
+
+                <div class="orbit-ring r1"></div>
+                <div class="orbit-ring r2"></div>
+                <div class="orbit-ring r3"></div>
+
+                <div class="orbit-ring-outer" id="orbitOuter"></div>
+
+                <div class="orbit-ring-inner" id="orbitInner"></div>
+
+                <div class="hero-statue-shadow"></div>
+                
+                <span class="light l1"></span>
+                <span class="light l2"></span>
+                <span class="light l3"></span>
+                <span class="light l4"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hero-scroll-cue" aria-hidden="true">
+        <div class="wheel"></div>
+    </div>
+
+</header>
+
+<!-- ✅ ONLY ADDED THIS LINE -->
+<script src="js/script.js"></script>
+<!-- ============ STATS ============ -->
+<section class="section-tight">
+  <div class="wrap">
+    <div class="stat-strip center reveal" style="justify-content:center;" id="statStrip">
+      <div><div class="num" data-target="40" data-suffix="+">0+</div><div class="lbl" data-i18n="hero.statProjects">Projects delivered</div></div>
+      <div><div class="num" data-target="15" data-suffix="+">0+</div><div class="lbl" data-i18n="hero.statCountries">Countries served</div></div>
+      <div><div class="num" data-target="98" data-suffix="%">0%</div><div class="lbl" data-i18n="hero.statRetention">Client retention</div></div>
+      <div><div class="num" data-static="24/7">24/7</div><div class="lbl" data-i18n="hero.statSupport">Global support</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOGO MARQUEE (placeholder — replace with real client logos later) ============ -->
+<div class="marquee-wrap">
+  <p class="center body-text reveal" style="margin-bottom:28px;" data-i18n="logos.label">Trusted by founders and teams worldwide</p>
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<section class="alt" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-i18n="servicesPage.eyebrow">What we do</p>
+      <h2 data-i18n="servicesPage.title">—</h2>
+      <p class="lead" style="margin-top:14px;" data-i18n="servicesPage.subtitle">—</p>
+    </div>
+    <div class="grid grid-3" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- ============ FEATURE MEDIA ROW ============ -->
+<section>
+  <div class="wrap">
+    <div class="media-row">
+      <div class="reveal">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80" alt="Developers reviewing code for a web application">
+      </div>
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="servicesPage.items.0.tag">Web &amp; App Development</p>
+        <h2 style="margin-top:10px;" data-i18n="servicesPage.items.0.title">—</h2>
+        <p class="body-text" style="margin-top:16px;" data-i18n="servicesPage.items.0.description">—</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="alt" id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-i18n="projectsPage.eyebrow">Our work</p>
+      <h2 data-i18n="projectsPage.title">—</h2>
+      <p class="lead" style="margin-top:14px;" data-i18n="projectsPage.subtitle">—</p>
+    </div>
+    <div class="grid grid-3" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-i18n="reviewsPage.eyebrow">Client voices</p>
+      <h2 data-i18n="reviewsPage.title">—</h2>
+      <p class="lead" style="margin-top:14px;" data-i18n="reviewsPage.subtitle">—</p>
+    </div>
+
+    <div class="testimonial-spotlight reveal" id="testimonialSpotlight">
+      <div class="spotlight-quote" id="spotlightQuote"></div>
+      <div class="spotlight-dots" id="spotlightDots"></div>
+    </div>
+
+    <div class="grid" style="grid-template-columns:1fr 1.4fr; gap:44px; align-items:start;" id="reviewsLayout">
+      <form class="quote-card reveal" id="reviewForm" style="display:flex; flex-direction:column; gap:16px;">
+        <h3 data-i18n="reviewsPage.formTitle">Share your experience</h3>
+        <div class="field">
+          <label data-i18n="reviewsPage.nameLabel">Your name</label>
+          <input type="text" id="reviewName" required data-i18n-placeholder="reviewsPage.namePlaceholder">
+        </div>
+        <div class="field">
+          <label data-i18n="reviewsPage.ratingLabel">Rating</label>
+          <div class="star-input" id="starInput">
+            <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="reviewsPage.messageLabel">Your review</label>
+          <textarea id="reviewMessage" required data-i18n-placeholder="reviewsPage.messagePlaceholder"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;" data-i18n="reviewsPage.submit">Submit review</button>
+        <p class="form-status" id="reviewStatus"></p>
+        <p class="form-note" data-i18n="reviewsPage.configNote">Reviews are stored locally in your browser for this demo.</p>
+      </form>
+
+      <div class="grid grid-2" id="reviewsGrid" style="align-content:start;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="alt" id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-i18n="aboutPage.eyebrow">Our story</p>
+      <h2 data-i18n="aboutPage.title">—</h2>
+      <p class="lead" style="margin-top:14px;" data-i18n="aboutPage.subtitle">—</p>
+    </div>
+
+    <div class="media-row reveal">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Virexo Technologies team collaborating">
+      <div>
+        <p class="eyebrow" data-i18n="aboutPage.missionEyebrow">Our mission</p>
+        <h2 style="margin-top:10px;" data-i18n="aboutPage.missionTitle">—</h2>
+        <p class="body-text" style="margin-top:16px;" data-i18n="aboutPage.missionText1">—</p>
+        <p class="body-text" style="margin-top:12px;" data-i18n="aboutPage.missionText2">—</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="eyebrow center reveal" data-i18n="aboutPage.founderEyebrow">Leadership</p>
+    <h2 class="center reveal" style="margin:10px 0 34px;" data-i18n="aboutPage.founderTitle">Meet the founder</h2>
+    <div class="founder-card reveal">
+      <img src="Founder.png" alt="Ahtsham Aslam, Founder">
+      <div>
+        <p class="role" data-i18n="aboutPage.founderRole">Founder &amp; CEO</p>
+        <h3 style="font-size:26px;" data-i18n="aboutPage.founderName">Ahtsham Aslam</h3>
+        <p class="body-text" style="margin-top:12px;" data-i18n="aboutPage.founderBio">—</p>
+      </div>
+    </div>
+   
+
+    <div class="divider"></div>
+
+    <h2 class="center reveal" data-i18n="aboutPage.clientsTitle">Global clients</h2>
+    <p class="lead center reveal" style="margin:12px 0 40px;" data-i18n="aboutPage.clientsSubtitle">—</p>
+    <div class="grid grid-4" id="clientsGrid"></div>
+
+    <div class="divider"></div>
+
+    <h2 class="center reveal" data-i18n="aboutPage.valuesTitle">How we operate</h2>
+    <div class="grid grid-4" id="valuesGrid" style="margin-top:36px;"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-i18n="contactPage.eyebrow">Get in touch</p>
+      <h2 data-i18n="contactPage.title">—</h2>
+      <p class="lead" style="margin-top:14px;" data-i18n="contactPage.subtitle">—</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <h3 style="margin-bottom:20px;" data-i18n="contactPage.formTitle">Send us a message</h3>
+        <form class="form" id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="contactPage.nameLabel">Full name</label>
+              <input type="text" id="cName" required data-i18n-placeholder="contactPage.namePlaceholder">
+            </div>
+            <div class="field">
+              <label data-i18n="contactPage.emailLabel">Email</label>
+              <input type="email" id="cEmail" required data-i18n-placeholder="contactPage.emailPlaceholder">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="contactPage.phoneLabel">Phone / WhatsApp</label>
+              <input type="tel" id="cPhone" data-i18n-placeholder="contactPage.phonePlaceholder">
+            </div>
+            <div class="field">
+              <label data-i18n="contactPage.serviceLabel">Service you need</label>
+              <select id="cService"></select>
+            </div>
+          </div>
+          <div class="field">
+            <label data-i18n="contactPage.messageLabel">Project details</label>
+            <textarea id="cMessage" required data-i18n-placeholder="contactPage.messagePlaceholder"></textarea>
+          </div>
+          <p class="form-note" data-i18n="contactPage.note">—</p>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;" data-i18n="contactPage.submit">Send message</button>
+          <p class="form-status" id="contactStatus"></p>
+          <div id="contactAltLinks" style="display:none; gap:12px; flex-wrap:wrap;">
+            <a id="waSendLink" href="#" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="contactPage.whatsappCta">Send via WhatsApp</a>
+            <a id="mailSendLink" href="mailto:techvirexo@gmail.com" class="btn btn-ghost" data-i18n="contactPage.emailLabelShort">Send via Email</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="reveal">
+        <h3 style="margin-bottom:20px;" data-i18n="contactPage.detailsTitle">Contact details</h3>
+        <ul class="contact-list">
+          <li>
+            <div class="ic">✉️</div>
+            <div><div class="lbl" data-i18n="contactPage.emailLabelShort">Email</div><div class="val"><a href="mailto:techvirexo@gmail.com">techvirexo@gmail.com</a></div></div>
+          </li>
+          <li>
+            <div class="ic">💬</div>
+            <div><div class="lbl" data-i18n="contactPage.whatsappLabel">WhatsApp</div><div class="val"><a href="https://wa.me/966581028494" target="_blank" rel="noopener">+966 58 102 8494</a></div></div>
+          </li>
+          <li>
+            <div class="ic">🧑‍💼</div>
+            <div><div class="lbl" data-i18n="contactPage.founderLabel">Founder</div><div class="val" data-i18n="aboutPage.founderName">Ahtsham Aslam</div></div>
+          </li>
+          <li>
+            <div class="ic">🌍</div>
+            <div><div class="lbl" data-i18n="contactPage.availabilityLabel">Availability</div><div class="val" data-i18n="contactPage.availabilityValue">—</div></div>
+          </li>
+        </ul>
+        <div class="quote-card" style="margin-top:28px;">
+          <p style="font-size:15.5px;" data-i18n="contactPage.whatsappCtaText">—</p>
+          <a href="https://wa.me/966581028494" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:18px;">
+            <span data-i18n="contactPage.whatsappCta">Message on WhatsApp</span> <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h2 class="center reveal" data-i18n="contactPage.faqTitle">Before you reach out</h2>
+    <div class="grid grid-2" id="faqGrid" style="margin-top:36px;"></div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <p class="eyebrow" style="color:#5ac8fa;" data-i18n="hero.eyebrow">Virexo Technologies</p>
+      <h2><span data-i18n="home.ctaTitle">Tell us what you're growing.</span><br><span data-i18n="home.ctaTitle2">We'll tell you how to get there.</span></h2>
+      <p class="lead" data-i18n="home.ctaSubtitle">—</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-invert"><span data-i18n="home.ctaButton">Book a consultation</span> <span>→</span></a>
+        <a href="https://wa.me/966581028494" class="btn btn-outline-invert" target="_blank" rel="noopener" data-i18n="home.whatsappButton">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <!-- 🔶 LOGO HERE (footer): same idea — swap <span class="mark"></span>
+             for <img src="your-logo.png" style="width:20px;height:20px;border-radius:6px;object-fit:contain;"> -->
+        <div class="brand"><span class="mark"></span> <span data-i18n="brand">Virexo Technologies</span></div>
+        <p style="margin-top:12px; max-width:260px;" data-i18n="footer.tagline">—</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.servicesTitle">Services</h4>
+        <ul id="footServices"></ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.companyTitle">Company</h4>
+        <ul>
+          <li><a href="#about" data-i18n="nav.about">About us</a></li>
+          <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.contactTitle">Contact</h4>
+        <ul>
+          <li><a href="mailto:techvirexo@gmail.com">techvirexo@gmail.com</a></li>
+          <li><a href="https://wa.me/966581028494" target="_blank" rel="noopener">+966 58 102 8494</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Virexo Technologies. <span data-i18n="footer.rights">All rights reserved.</span></span>
+      <div class="social-row">
+        <a href="https://wa.me/966581028494" target="_blank" rel="noopener" aria-label="WhatsApp">🟢</a>
+        <a href="mailto:techvirexo@gmail.com" aria-label="Email">✉️</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   TRANSLATIONS DATA — one object per language, same shape as the
+   Next.js version of this project, so content stays consistent.
+   ========================================================================= */
+const translations = {"en":{"dir":"ltr","nav":{"home":"Home","services":"Services","projects":"Projects","reviews":"Reviews","about":"About","contact":"Contact","cta":"Get a Quote"},"hero":{"eyebrow":"Virexo Technologies · Global Digital Agency","titleA":"We build digital","titleHighlight":"products","titleB":"that grow real businesses.","subtitle":"Web & app development, SEO, Google Ads, digital marketing and social media management — one accountable team, serving clients worldwide.","ctaPrimary":"Start a project","ctaSecondary":"Explore services","statProjects":"Projects delivered","statCountries":"Countries served","statRetention":"Client retention","statSupport":"Global support"},"logos":{"label":"Trusted by founders and teams across the globe","note":"Replace with real client logos later"},"home":{"servicesEyebrow":"What we do","servicesTitle":"Five disciplines. One accountable team.","servicesSubtitle":"Every service is delivered in-house — no outsourcing, no hand-offs.","viewAll":"View all services","projectsEyebrow":"Our work","projectsTitle":"Real projects, real clients, real results.","viewAllProjects":"View all projects","ctaTitle":"Tell us what you're growing.","ctaTitle2":"We'll tell you how to get there.","ctaSubtitle":"Free 20-minute consultation — no obligation, anywhere in the world.","ctaButton":"Book a consultation","whatsappButton":"Chat on WhatsApp"},"servicesPage":{"eyebrow":"What we do","title":"Everything a growing brand needs, under one roof.","subtitle":"Five disciplines, delivered by one accountable team — for clients across the world.","items":[{"title":"Mobile App Development","tag":"Android • iOS • Flutter","description":"We build custom Android, iOS, and cross-platform mobile applications with modern UI/UX, secure backend integration, high performance, and scalable architecture tailored to your business needs."},{"title":"Web Development","tag":"Business Websites • E-Commerce • Custom Web Apps","description":"We create fast, secure, and responsive websites and web applications with modern design, scalable architecture, and SEO-friendly development to help businesses grow online."},{"title":"Social Media Marketing","tag":"Facebook • Instagram • LinkedIn","description":"We help businesses grow their online presence through strategic social media management, engaging content creation, targeted advertising, and data-driven marketing campaigns."},{"title":"Search Engine Optimization (SEO)","tag":"Technical SEO • On-Page • Off-Page","description":"We improve your website's search engine rankings through comprehensive SEO strategies, including technical optimization, keyword research, on-page SEO, high-quality link building, and performance monitoring to drive long-term organic growth."},{"title":"Google Ads Management","tag":"Search Ads • Display Ads • Performance Max","description":"We create, manage, and optimize high-performing Google Ads campaigns to increase brand visibility, generate qualified leads, maximize conversions, and deliver the highest return on your advertising investment."}],"processTitle":"A process built for clarity, not surprises.","steps":[{"title":"Discover","text":"We learn your business, goals and audience before proposing a single tactic."},{"title":"Plan","text":"A clear scope, timeline and success metrics, agreed before we start building."},{"title":"Build & launch","text":"Design, development or campaign setup, with regular check-ins along the way."},{"title":"Grow","text":"Ongoing optimization and reporting, so results keep improving after launch."}]},"projectsPage":{"eyebrow":"Our work","title":"A portfolio built on global partnerships.","subtitle":"A selection of client projects across four continents.","label":"Client Project","items":[{"title":"Dubai Hotel Website","country":"United Arab Emirates","description":"A premium hotel booking platform developed for a Dubai-based hospitality business, featuring a modern responsive design, multilingual support, real-time room availability, secure online reservations, interactive room showcases, contact forms, and an optimized user experience to maximize direct bookings and customer engagement."},{"title":"UK School Website","country":"United Kingdom","description":"A modern and fully responsive website developed for a UK educational institution, featuring online admissions, student and parent information portals, staff profiles, event management, news updates, contact forms, and an accessible user experience designed to enhance communication and simplify school administration."},{"title":"Home Service App","country":"United Arab Emirates","description":"A complete on-demand home services mobile application designed to connect customers with trusted service providers, featuring instant booking, real-time order tracking, secure online payments, service scheduling, provider management, customer reviews, push notifications, and a modern, user-friendly interface built for scalability and high performance."},{"title":"Canada SEO Campaign","country":"Canada","description":"A comprehensive SEO campaign delivered for a Canadian business, including technical SEO, in-depth keyword research, on-page optimization, content strategy, high-quality link building, and performance monitoring to improve search engine rankings, increase organic traffic, and generate long-term business growth."},{"title":"Pakistan Google Ads Campaign","country":"Pakistan","description":"A results-driven Google Ads campaign developed for a Pakistan-based business, including keyword research, campaign strategy, audience targeting, ad copy optimization, conversion tracking, and continuous performance improvements to maximize qualified leads, increase conversions, and achieve a higher return on advertising investment."}]},"reviewsPage":{"eyebrow":"Client voices","title":"What clients say about working with us.","subtitle":"Real feedback from real projects — submit your own below.","formTitle":"Share your experience","nameLabel":"Your name","namePlaceholder":"Jane Doe","ratingLabel":"Rating","messageLabel":"Your review","messagePlaceholder":"Tell us how the project went...","submit":"Submit review","submitting":"Submitting...","successMsg":"Thank you — your review has been posted!","errorMsg":"Something went wrong. Please try again.","empty":"No reviews yet — be the first to share your experience.","loading":"Loading reviews...","configNote":"Reviews are stored in Firebase. Add your Firebase project keys in lib/firebase.js to activate this fully."},"aboutPage":{"eyebrow":"Our story","title":"A small team, working with clients worldwide.","subtitle":"Virexo Technologies was built on a simple idea: businesses shouldn't need five different agencies to grow online.","missionEyebrow":"Our mission","missionTitle":"Give every business worldwide access to innovative digital solutions that drive growth, strengthen online presence, and create long-term success.","missionText1":"Virexo Technologies was founded to help businesses achieve their digital goals through high-quality web development, mobile app development, digital marketing, SEO, Google Ads, and creative technology solutions delivered with professionalism, innovation, and transparency.","missionText2":"Today, we proudly partner with businesses across the globe, delivering reliable, scalable, and results-driven digital solutions while building long-term relationships based on trust, quality, and measurable success.","founderEyebrow":"Leadership","founderTitle":"Meet the founder","founderName":"Ahtsham Aslam","founderRole":"Founder & CEO","founderBio":"Ahtsham Aslam founded Virexo Technologies with a vision to help businesses worldwide succeed through innovative web development, mobile app development, digital marketing, SEO, and technology solutions. He leads the company with a strong focus on quality, innovation, and client satisfaction, ensuring every project delivers measurable results and long-term business value.","clientsTitle":"Global clients","clientsSubtitle":"Serving businesses across four countries and counting.","clients":[{"country":"United Arab Emirates","project":"Hotel website & home service app"},{"country":"United Kingdom","project":"School website development"},{"country":"Canada","project":"SEO services"},{"country":"Pakistan","project":"Google Ads management"}],"valuesTitle":"How we operate","values":[{"title":"Direct access","text":"You talk to the people doing the work, not an account manager relaying messages."},{"title":"Truly global","text":"Comfortable working across time zones, currencies and languages from day one."},{"title":"Numbers over noise","text":"Every service is measured against a metric that matters to your business."},{"title":"Built to move fast","text":"Small team, few layers, quick decisions, without cutting corners on quality."}]},"contactPage":{"eyebrow":"Get in touch","title":"Let's talk about your project.","subtitle":"Tell us a bit about what you need — we typically reply within one business day, wherever you're located.","formTitle":"Send us a message","nameLabel":"Full name","namePlaceholder":"Your name","emailLabel":"Email","emailPlaceholder":"you@company.com","phoneLabel":"Phone / WhatsApp","phonePlaceholder":"+1 234 567 8900","serviceLabel":"Service you need","messageLabel":"Project details","messagePlaceholder":"Tell us about your business and what you're looking to achieve...","note":"By submitting, you agree to be contacted by Virexo Technologies about your enquiry.","submit":"Send message","submitting":"Sending...","successMsg":"Thanks — your message has been received. We'll be in touch soon.","detailsTitle":"Contact details","emailLabelShort":"Email","whatsappLabel":"WhatsApp","founderLabel":"Founder","availabilityLabel":"Availability","availabilityValue":"Serving clients globally, all time zones","whatsappCtaText":"Prefer a quick chat? Message us directly on WhatsApp and we'll respond within a few hours.","whatsappCta":"Message on WhatsApp","faqTitle":"Before you reach out","faqs":[{"q":"Do you work with clients outside your time zone?","a":"Yes — most of our clients are outside our home time zone. We schedule around your hours, not just ours."},{"q":"How fast can you start?","a":"Most projects kick off within a week of the scope being agreed."},{"q":"Do you offer ongoing support?","a":"Yes — every project can move into an ongoing maintenance or growth retainer after launch."},{"q":"What does it cost?","a":"It depends on scope. Share your project details and we'll send a clear, itemized quote."}]},"footer":{"tagline":"A global digital partner for web, app and growth marketing — founded by Ahtsham Aslam.","servicesTitle":"Services","companyTitle":"Company","contactTitle":"Contact","rights":"All rights reserved."},"theme":{"light":"Light mode","dark":"Dark mode"}},"ar":{"dir":"rtl","nav":{"home":"الرئيسية","services":"الخدمات","projects":"المشاريع","reviews":"التقييمات","about":"من نحن","contact":"تواصل معنا","cta":"اطلب عرض سعر"},"hero":{"eyebrow":"فيريكسو تكنولوجيز · وكالة رقمية عالمية","titleA":"نصمم منتجات","titleHighlight":"رقمية","titleB":"تُنمّي أعمالاً حقيقية.","subtitle":"تطوير المواقع والتطبيقات، تحسين محركات البحث، إعلانات جوجل، التسويق الرقمي وإدارة وسائل التواصل الاجتماعي — فريق واحد مسؤول، يخدم عملاء حول العالم.","ctaPrimary":"ابدأ مشروعك","ctaSecondary":"استكشف خدماتنا","statProjects":"مشروع منجز","statCountries":"دولة نخدمها","statRetention":"نسبة بقاء العملاء","statSupport":"دعم عالمي"},"logos":{"label":"موثوق به من قبل مؤسسين وفرق حول العالم","note":"استبدل هذا لاحقاً بشعارات العملاء الحقيقية"},"home":{"servicesEyebrow":"ماذا نقدم","servicesTitle":"خمسة تخصصات. فريق واحد مسؤول.","servicesSubtitle":"كل خدمة تُنفَّذ داخلياً — بلا تعهيد وبلا تسليم متقطع.","viewAll":"عرض جميع الخدمات","projectsEyebrow":"أعمالنا","projectsTitle":"مشاريع حقيقية، عملاء حقيقيون، نتائج حقيقية.","viewAllProjects":"عرض جميع المشاريع","ctaTitle":"أخبرنا بما تريد تنميته.","ctaTitle2":"وسنخبرك كيف تصل إليه.","ctaSubtitle":"استشارة مجانية لمدة 20 دقيقة — دون أي التزام، أينما كنت.","ctaButton":"احجز استشارة","whatsappButton":"تواصل عبر واتساب"},"servicesPage":{"eyebrow":"ماذا نقدم","title":"كل ما تحتاجه علامة تجارية نامية، تحت سقف واحد.","subtitle":"خمسة تخصصات، يقدّمها فريق واحد مسؤول — لعملاء حول العالم.","items":[{"title":"تطوير تطبيق خدمات منزلية","tag":"تطبيق جوال · الإمارات","description":"تطبيق متكامل لطلب الخدمات المنزلية عند الطلب — حجز، تتبع مباشر، دفع داخل التطبيق وإدارة لمقدمي الخدمة، مصمم للنمو."},{"title":"تطوير موقع فندقي","tag":"منصة ويب · مشروع دبي","description":"موقع فندقي جاهز للحجز لعميل ضيافة في دبي، بصفحات متعددة اللغات وتوفر غرف وتجربة حجز سلسة."},{"title":"تطوير موقع مدرسي","tag":"منصة ويب · مشروع بريطانيا","description":"موقع مدرسي حديث وسهل الوصول لمؤسسة تعليمية في بريطانيا — نماذج قبول، بوابات للموظفين ومركز تواصل مع أولياء الأمور."},{"title":"خدمات تحسين محركات البحث","tag":"نمو عضوي · عميل كندي","description":"تدقيق تقني، استراتيجية محتوى وبناء روابط نقلت عميلاً كندياً من الصفحة الثالثة إلى صدارة نتائج البحث."},{"title":"إدارة إعلانات جوجل","tag":"إعلانات مدفوعة · عميل باكستاني","description":"حملات بحث وأداء أقصى لعميل من باكستان، مع تحسين مستمر لعائد الإنفاق الإعلاني."}],"processTitle":"عملية مبنية على الوضوح، لا المفاجآت.","steps":[{"title":"الاكتشاف","text":"نتعرف على عملك وأهدافك وجمهورك قبل اقتراح أي خطوة."},{"title":"التخطيط","text":"نطاق عمل واضح، جدول زمني ومؤشرات نجاح، متفق عليها قبل البدء."},{"title":"البناء والإطلاق","text":"تصميم، تطوير أو إعداد حملة، مع متابعات منتظمة طوال الطريق."},{"title":"النمو","text":"تحسين وتقارير مستمرة، لتستمر النتائج في التحسن بعد الإطلاق."}]},"projectsPage":{"eyebrow":"أعمالنا","title":"معرض أعمال مبني على شراكات عالمية.","subtitle":"مجموعة مختارة من مشاريع العملاء عبر أربع قارات.","label":"مشروع عميل","items":[{"title":"موقع فندق دبي","country":"الإمارات","description":"موقع حجز فاخر لفندق بوتيك في دبي، مع توفر فوري وتجربة نزيل متعددة اللغات."},{"title":"موقع مدرسة بريطانية","country":"المملكة المتحدة","description":"موقع يركز على القبول لمدرسة ثانوية بريطانية، مصمم لسهولة الوصول وتحديث المحتوى من قبل الموظفين."},{"title":"تطبيق خدمات منزلية","country":"الإمارات","description":"تطبيق خدمات منزلية عند الطلب يربط العملاء بمزودي خدمة موثوقين، من الحجز إلى الدفع داخل التطبيق."},{"title":"حملة تحسين محركات بحث كندية","country":"كندا","description":"تعاون لمدة 12 شهراً في تحسين محركات البحث ضاعف حركة الزيارات العضوية ثلاث مرات لعميل خدمات مهنية في تورنتو."},{"title":"حملة إعلانات جوجل باكستانية","country":"باكستان","description":"إعادة هيكلة حساب إعلانات جوجل قائمة على الأداء خفّضت تكلفة العميل المحتمل بنحو 40٪ خلال شهرين."}]},"reviewsPage":{"eyebrow":"آراء العملاء","title":"ماذا يقول عملاؤنا عن العمل معنا.","subtitle":"آراء حقيقية من مشاريع حقيقية — شارك رأيك أدناه.","formTitle":"شاركنا تجربتك","nameLabel":"اسمك","namePlaceholder":"الاسم الكامل","ratingLabel":"التقييم","messageLabel":"رأيك","messagePlaceholder":"أخبرنا كيف سار المشروع...","submit":"إرسال التقييم","submitting":"جارٍ الإرسال...","successMsg":"شكراً لك — تم نشر تقييمك!","errorMsg":"حدث خطأ ما. الرجاء المحاولة مرة أخرى.","empty":"لا توجد تقييمات بعد — كن أول من يشارك تجربته.","loading":"جارٍ تحميل التقييمات...","configNote":"تُخزَّن التقييمات في Firebase. أضف مفاتيح مشروعك في lib/firebase.js لتفعيل هذه الميزة بالكامل."},"aboutPage":{"eyebrow":"قصتنا","title":"فريق صغير، يعمل مع عملاء حول العالم.","subtitle":"تأسست فيريكسو تكنولوجيز على فكرة بسيطة: لا ينبغي للأعمال أن تحتاج خمس وكالات مختلفة لتنمو عبر الإنترنت.","missionEyebrow":"مهمتنا","missionTitle":"نمنح كل عميل خبرة بمستوى الوكالات، دون فوضى الوكالات.","missionText1":"أسسنا فيريكسو تكنولوجيز لسد الفجوة بين ما تحتاجه الأعمال فعلاً — موقع يعمل بكفاءة، إعلانات تحقق تحويلات، حضور ينمو — والطريقة المجزأة التي تعتمد عليها معظم الوكالات.","missionText2":"اليوم نعمل مع مؤسسين وفرق تسويق في الإمارات والمملكة المتحدة وكندا وباكستان، ونتعامل مع كل مشروع بنفس مستوى العناية.","founderEyebrow":"القيادة","founderTitle":"تعرف على المؤسس","founderName":"أحتشام أسلم","founderRole":"المؤسس والرئيس التنفيذي","founderBio":"أسس أحتشام فيريكسو تكنولوجيز ليجمع بين التطوير والتسويق التنموي تحت سقف واحد، بعد أن رأى الكثير من الأعمال تُدار بشكل مبعثر بين مستقلين ووكالات غير مترابطة. يقود الاستراتيجية وشراكات العملاء بنفسه، ليضمن أن يبقى كل مشروع متوافقاً مع أهداف العميل الحقيقية.","clientsTitle":"عملاء حول العالم","clientsSubtitle":"نخدم أعمالاً في أربع دول وفي تزايد مستمر.","clients":[{"country":"الإمارات العربية المتحدة","project":"موقع فندقي وتطبيق خدمات منزلية"},{"country":"المملكة المتحدة","project":"تطوير موقع مدرسي"},{"country":"كندا","project":"خدمات تحسين محركات البحث"},{"country":"باكستان","project":"إدارة إعلانات جوجل"}],"valuesTitle":"كيف نعمل","values":[{"title":"تواصل مباشر","text":"تتحدث مباشرة مع من ينجز العمل، وليس مع مدير حسابات ينقل الرسائل."},{"title":"عالميون فعلاً","text":"مرتاحون في العمل عبر مناطق زمنية وعملات ولغات مختلفة منذ اليوم الأول."},{"title":"الأرقام قبل الضجيج","text":"كل خدمة تُقاس بمؤشر فعلي يهم عملك."},{"title":"مبنيون للسرعة","text":"فريق صغير، طبقات إدارية أقل، قرارات سريعة، دون التنازل عن الجودة."}]},"contactPage":{"eyebrow":"تواصل معنا","title":"دعنا نتحدث عن مشروعك.","subtitle":"أخبرنا قليلاً عمّا تحتاجه — عادةً نرد خلال يوم عمل واحد، أينما كنت.","formTitle":"أرسل لنا رسالة","nameLabel":"الاسم الكامل","namePlaceholder":"اسمك","emailLabel":"البريد الإلكتروني","emailPlaceholder":"you@company.com","phoneLabel":"الهاتف / واتساب","phonePlaceholder":"+1 234 567 8900","serviceLabel":"الخدمة التي تحتاجها","messageLabel":"تفاصيل المشروع","messagePlaceholder":"أخبرنا عن عملك وما الذي تريد تحقيقه...","note":"بإرسالك هذا النموذج، أنت توافق على أن تتواصل معك فيريكسو تكنولوجيز بخصوص استفسارك.","submit":"إرسال الرسالة","submitting":"جارٍ الإرسال...","successMsg":"شكراً — تم استلام رسالتك. سنتواصل معك قريباً.","detailsTitle":"بيانات التواصل","emailLabelShort":"البريد الإلكتروني","whatsappLabel":"واتساب","founderLabel":"المؤسس","availabilityLabel":"التوفر","availabilityValue":"نخدم عملاء حول العالم، في جميع المناطق الزمنية","whatsappCtaText":"تفضل محادثة سريعة؟ راسلنا مباشرة على واتساب وسنرد خلال ساعات قليلة.","whatsappCta":"راسلنا عبر واتساب","faqTitle":"قبل أن تتواصل معنا","faqs":[{"q":"هل تعملون مع عملاء خارج منطقتكم الزمنية؟","a":"نعم — معظم عملائنا خارج منطقتنا الزمنية. ننسّق حسب مواعيدك أنت."},{"q":"ما مدى سرعة البدء؟","a":"تبدأ معظم المشاريع خلال أسبوع من الاتفاق على النطاق."},{"q":"هل تقدمون دعماً مستمراً؟","a":"نعم — يمكن لأي مشروع الانتقال إلى صيانة مستمرة أو باقة نمو بعد الإطلاق."},{"q":"كم تبلغ التكلفة؟","a":"تعتمد على النطاق. شاركنا تفاصيل مشروعك وسنرسل عرض سعر واضح ومفصل."}]},"footer":{"tagline":"شريك رقمي عالمي لتطوير المواقع والتطبيقات والتسويق التنموي — أسسه أحتشام أسلم.","servicesTitle":"الخدمات","companyTitle":"الشركة","contactTitle":"تواصل","rights":"جميع الحقوق محفوظة."},"theme":{"light":"الوضع الفاتح","dark":"الوضع الداكن"}},"fr":{"dir":"ltr","nav":{"home":"Accueil","services":"Services","projects":"Projets","reviews":"Avis","about":"À propos","contact":"Contact","cta":"Demander un devis"},"hero":{"eyebrow":"Virexo Technologies · Agence numérique mondiale","titleA":"Nous créons des produits","titleHighlight":"numériques","titleB":"qui font grandir de vraies entreprises.","subtitle":"Développement web & mobile, SEO, Google Ads, marketing digital et gestion des réseaux sociaux — une seule équipe responsable, au service de clients partout dans le monde.","ctaPrimary":"Démarrer un projet","ctaSecondary":"Découvrir nos services","statProjects":"Projets livrés","statCountries":"Pays desservis","statRetention":"Fidélisation client","statSupport":"Support mondial"},"logos":{"label":"La confiance de fondateurs et d'équipes dans le monde entier","note":"À remplacer plus tard par de vrais logos clients"},"home":{"servicesEyebrow":"Ce que nous faisons","servicesTitle":"Cinq expertises. Une seule équipe responsable.","servicesSubtitle":"Chaque service est réalisé en interne — sans sous-traitance, sans rupture de suivi.","viewAll":"Voir tous les services","projectsEyebrow":"Nos réalisations","projectsTitle":"De vrais projets, de vrais clients, de vrais résultats.","viewAllProjects":"Voir tous les projets","ctaTitle":"Dites-nous ce que vous voulez développer.","ctaTitle2":"Nous vous dirons comment y arriver.","ctaSubtitle":"Consultation gratuite de 20 minutes — sans engagement, où que vous soyez.","ctaButton":"Réserver une consultation","whatsappButton":"Discuter sur WhatsApp"},"servicesPage":{"eyebrow":"Ce que nous faisons","title":"Tout ce dont une marque en croissance a besoin, sous un même toit.","subtitle":"Cinq expertises, assurées par une seule équipe responsable — pour des clients partout dans le monde.","items":[{"title":"Développement d'application de services à domicile","tag":"Application mobile · Émirats arabes unis","description":"Une application complète de services à domicile à la demande — réservation, suivi en temps réel, paiements intégrés et gestion des prestataires, conçue pour évoluer."},{"title":"Développement de site web hôtelier","tag":"Plateforme web · Projet Dubaï","description":"Un site hôtelier prêt à la réservation pour un client hôtelier à Dubaï, avec pages multilingues, disponibilité des chambres et un parcours de réservation fluide."},{"title":"Développement de site web scolaire","tag":"Plateforme web · Projet Royaume-Uni","description":"Un site scolaire moderne et accessible pour un établissement britannique — formulaires d'admission, portails du personnel et espace de communication avec les parents."},{"title":"Services SEO","tag":"Croissance organique · Client canadien","description":"Audits techniques, stratégie de contenu et création de liens ayant fait passer un client canadien de la troisième page à la tête des résultats de recherche."},{"title":"Gestion de Google Ads","tag":"Médias payants · Client pakistanais","description":"Campagnes Search et Performance Max pour un client basé au Pakistan, optimisées en continu pour le retour sur investissement publicitaire."}],"processTitle":"Un processus pensé pour la clarté, pas les surprises.","steps":[{"title":"Découverte","text":"Nous apprenons à connaître votre entreprise, vos objectifs et votre audience avant toute proposition."},{"title":"Planification","text":"Un périmètre clair, un calendrier et des indicateurs de succès, validés avant de commencer."},{"title":"Conception & lancement","text":"Design, développement ou mise en place de campagne, avec des points réguliers."},{"title":"Croissance","text":"Optimisation et reporting continus, pour des résultats qui s'améliorent après le lancement."}]},"projectsPage":{"eyebrow":"Nos réalisations","title":"Un portefeuille bâti sur des partenariats mondiaux.","subtitle":"Une sélection de projets clients sur quatre continents.","label":"Projet client","items":[{"title":"Site web d'hôtel à Dubaï","country":"Émirats arabes unis","description":"Un site de réservation haut de gamme pour un hôtel-boutique à Dubaï, avec disponibilité en temps réel et expérience multilingue."},{"title":"Site web scolaire au Royaume-Uni","country":"Royaume-Uni","description":"Un site axé sur les admissions pour un établissement secondaire britannique, conçu pour l'accessibilité et une mise à jour facile par le personnel."},{"title":"Application de services à domicile","country":"Émirats arabes unis","description":"Une application de services à domicile à la demande reliant les clients à des prestataires vérifiés, de la réservation au paiement intégré."},{"title":"Campagne SEO au Canada","country":"Canada","description":"Une collaboration SEO de 12 mois ayant triplé le trafic organique d'un client de services professionnels à Toronto."},{"title":"Campagne Google Ads au Pakistan","country":"Pakistan","description":"Une restructuration de compte Google Ads axée sur la performance, réduisant le coût par prospect de près de 40 % en deux mois."}]},"reviewsPage":{"eyebrow":"Avis clients","title":"Ce que nos clients disent de notre collaboration.","subtitle":"De vrais retours sur de vrais projets — partagez le vôtre ci-dessous.","formTitle":"Partagez votre expérience","nameLabel":"Votre nom","namePlaceholder":"Jean Dupont","ratingLabel":"Note","messageLabel":"Votre avis","messagePlaceholder":"Racontez-nous comment le projet s'est déroulé...","submit":"Envoyer l'avis","submitting":"Envoi en cours...","successMsg":"Merci — votre avis a été publié !","errorMsg":"Une erreur est survenue. Veuillez réessayer.","empty":"Aucun avis pour le moment — soyez le premier à partager votre expérience.","loading":"Chargement des avis...","configNote":"Les avis sont stockés dans Firebase. Ajoutez les clés de votre projet Firebase dans lib/firebase.js pour activer cette fonctionnalité."},"aboutPage":{"eyebrow":"Notre histoire","title":"Une petite équipe, des clients dans le monde entier.","subtitle":"Virexo Technologies est né d'une idée simple : une entreprise ne devrait pas avoir besoin de cinq agences différentes pour se développer en ligne.","missionEyebrow":"Notre mission","missionTitle":"Offrir à chaque client une expertise d'agence, sans le chaos d'agence.","missionText1":"Nous avons créé Virexo Technologies pour combler l'écart entre ce dont les entreprises ont réellement besoin — un site performant, des publicités qui convertissent, une présence qui grandit — et la manière fragmentée dont la plupart des agences le proposent.","missionText2":"Aujourd'hui, nous travaillons avec des fondateurs et des équipes marketing aux Émirats arabes unis, au Royaume-Uni, au Canada et au Pakistan, en traitant chaque projet avec le même soin.","founderEyebrow":"Direction","founderTitle":"Rencontrez le fondateur","founderName":"Ahtsham Aslam","founderRole":"Fondateur & PDG","founderBio":"Ahtsham a fondé Virexo Technologies pour réunir développement et marketing de croissance sous un même toit, après avoir constaté que trop d'entreprises jonglaient entre freelances et agences déconnectés. Il pilote personnellement la stratégie et les relations clients, pour que chaque projet reste aligné sur les objectifs réels du client.","clientsTitle":"Clients à travers le monde","clientsSubtitle":"Au service d'entreprises dans quatre pays, et ce n'est qu'un début.","clients":[{"country":"Émirats arabes unis","project":"Site hôtelier et application de services à domicile"},{"country":"Royaume-Uni","project":"Développement de site scolaire"},{"country":"Canada","project":"Services SEO"},{"country":"Pakistan","project":"Gestion de Google Ads"}],"valuesTitle":"Comment nous travaillons","values":[{"title":"Accès direct","text":"Vous parlez directement aux personnes qui font le travail, pas à un chargé de compte intermédiaire."},{"title":"Vraiment mondial","text":"À l'aise pour travailler à travers les fuseaux horaires, devises et langues dès le premier jour."},{"title":"Des chiffres, pas du bruit","text":"Chaque service est mesuré selon un indicateur qui compte pour votre entreprise."},{"title":"Conçu pour aller vite","text":"Petite équipe, peu d'échelons, décisions rapides, sans compromis sur la qualité."}]},"contactPage":{"eyebrow":"Contactez-nous","title":"Parlons de votre projet.","subtitle":"Dites-nous en un peu plus sur vos besoins — nous répondons généralement sous un jour ouvré, où que vous soyez.","formTitle":"Envoyez-nous un message","nameLabel":"Nom complet","namePlaceholder":"Votre nom","emailLabel":"E-mail","emailPlaceholder":"vous@entreprise.com","phoneLabel":"Téléphone / WhatsApp","phonePlaceholder":"+1 234 567 8900","serviceLabel":"Service souhaité","messageLabel":"Détails du projet","messagePlaceholder":"Parlez-nous de votre entreprise et de vos objectifs...","note":"En soumettant ce formulaire, vous acceptez d'être contacté par Virexo Technologies au sujet de votre demande.","submit":"Envoyer le message","submitting":"Envoi en cours...","successMsg":"Merci — votre message a bien été reçu. Nous vous recontacterons bientôt.","detailsTitle":"Coordonnées","emailLabelShort":"E-mail","whatsappLabel":"WhatsApp","founderLabel":"Fondateur","availabilityLabel":"Disponibilité","availabilityValue":"Au service de clients dans le monde entier, tous fuseaux horaires","whatsappCtaText":"Vous préférez une discussion rapide ? Écrivez-nous directement sur WhatsApp, réponse sous quelques heures.","whatsappCta":"Écrire sur WhatsApp","faqTitle":"Avant de nous contacter","faqs":[{"q":"Travaillez-vous avec des clients hors de votre fuseau horaire ?","a":"Oui — la plupart de nos clients sont hors de notre fuseau horaire. Nous nous organisons selon vos horaires."},{"q":"À quelle vitesse pouvez-vous démarrer ?","a":"La plupart des projets démarrent dans la semaine suivant la validation du périmètre."},{"q":"Proposez-vous un support continu ?","a":"Oui — chaque projet peut évoluer vers une formule de maintenance ou de croissance continue après le lancement."},{"q":"Quel est le coût ?","a":"Cela dépend du périmètre. Partagez les détails de votre projet et nous vous enverrons un devis clair et détaillé."}]},"footer":{"tagline":"Un partenaire numérique mondial pour le web, les applications et le marketing de croissance — fondé par Ahtsham Aslam.","servicesTitle":"Services","companyTitle":"Entreprise","contactTitle":"Contact","rights":"Tous droits réservés."},"theme":{"light":"Mode clair","dark":"Mode sombre"}},"es":{"dir":"ltr","nav":{"home":"Inicio","services":"Servicios","projects":"Proyectos","reviews":"Opiniones","about":"Nosotros","contact":"Contacto","cta":"Solicitar presupuesto"},"hero":{"eyebrow":"Virexo Technologies · Agencia digital global","titleA":"Creamos productos","titleHighlight":"digitales","titleB":"que hacen crecer negocios reales.","subtitle":"Desarrollo web y de apps, SEO, Google Ads, marketing digital y gestión de redes sociales — un solo equipo responsable, al servicio de clientes en todo el mundo.","ctaPrimary":"Iniciar un proyecto","ctaSecondary":"Explorar servicios","statProjects":"Proyectos entregados","statCountries":"Países atendidos","statRetention":"Retención de clientes","statSupport":"Soporte global"},"logos":{"label":"La confianza de fundadores y equipos en todo el mundo","note":"Reemplazar más adelante con logotipos reales de clientes"},"home":{"servicesEyebrow":"Qué hacemos","servicesTitle":"Cinco disciplinas. Un solo equipo responsable.","servicesSubtitle":"Cada servicio se ejecuta internamente — sin subcontratación, sin traspasos.","viewAll":"Ver todos los servicios","projectsEyebrow":"Nuestro trabajo","projectsTitle":"Proyectos reales, clientes reales, resultados reales.","viewAllProjects":"Ver todos los proyectos","ctaTitle":"Cuéntanos qué quieres hacer crecer.","ctaTitle2":"Te diremos cómo lograrlo.","ctaSubtitle":"Consulta gratuita de 20 minutos — sin compromiso, estés donde estés.","ctaButton":"Reservar una consulta","whatsappButton":"Chatear por WhatsApp"},"servicesPage":{"eyebrow":"Qué hacemos","title":"Todo lo que una marca en crecimiento necesita, bajo un mismo techo.","subtitle":"Cinco disciplinas, entregadas por un solo equipo responsable — para clientes en todo el mundo.","items":[{"title":"Desarrollo de app de servicios a domicilio","tag":"App móvil · EAU","description":"Una app completa de servicios a domicilio bajo demanda — reservas, seguimiento en vivo, pagos integrados y gestión de proveedores, diseñada para escalar."},{"title":"Desarrollo de sitio web hotelero","tag":"Plataforma web · Proyecto Dubái","description":"Un sitio web hotelero listo para reservas para un cliente hotelero en Dubái, con páginas multilingües, disponibilidad de habitaciones y un flujo de reserva fluido."},{"title":"Desarrollo de sitio web escolar","tag":"Plataforma web · Proyecto Reino Unido","description":"Un sitio web escolar moderno y accesible para una institución del Reino Unido — formularios de admisión, portales de personal y un canal de comunicación con padres."},{"title":"Servicios de SEO","tag":"Crecimiento orgánico · Cliente canadiense","description":"Auditorías técnicas, estrategia de contenido y construcción de enlaces que llevaron a un cliente canadiense de la tercera página a los primeros resultados de búsqueda."},{"title":"Gestión de Google Ads","tag":"Medios pagados · Cliente pakistaní","description":"Campañas de Search y Performance Max para un cliente con sede en Pakistán, optimizadas continuamente para el retorno de la inversión publicitaria."}],"processTitle":"Un proceso pensado para la claridad, no las sorpresas.","steps":[{"title":"Descubrimiento","text":"Conocemos tu negocio, objetivos y audiencia antes de proponer una sola táctica."},{"title":"Planificación","text":"Un alcance claro, cronograma y métricas de éxito, acordados antes de empezar."},{"title":"Construcción y lanzamiento","text":"Diseño, desarrollo o configuración de campaña, con seguimientos regulares."},{"title":"Crecimiento","text":"Optimización y reportes continuos, para que los resultados sigan mejorando tras el lanzamiento."}]},"projectsPage":{"eyebrow":"Nuestro trabajo","title":"Un portafolio construido sobre alianzas globales.","subtitle":"Una selección de proyectos de clientes en cuatro continentes.","label":"Proyecto de cliente","items":[{"title":"Sitio web de hotel en Dubái","country":"EAU","description":"Un sitio de reservas premium para un hotel boutique en Dubái, con disponibilidad en tiempo real y experiencia multilingüe para huéspedes."},{"title":"Sitio web escolar en el Reino Unido","country":"Reino Unido","description":"Un sitio enfocado en admisiones para una escuela secundaria del Reino Unido, diseñado para accesibilidad y fácil actualización por el personal."},{"title":"App de servicios a domicilio","country":"EAU","description":"Una app de servicios a domicilio bajo demanda que conecta clientes con proveedores verificados, desde la reserva hasta el pago integrado."},{"title":"Campaña de SEO en Canadá","country":"Canadá","description":"Una colaboración de SEO de 12 meses que triplicó el tráfico orgánico de un cliente de servicios profesionales en Toronto."},{"title":"Campaña de Google Ads en Pakistán","country":"Pakistán","description":"Una reestructuración de cuenta de Google Ads orientada al rendimiento que redujo el costo por lead casi un 40% en dos meses."}]},"reviewsPage":{"eyebrow":"Voces de clientes","title":"Lo que dicen los clientes de trabajar con nosotros.","subtitle":"Comentarios reales de proyectos reales — comparte el tuyo abajo.","formTitle":"Comparte tu experiencia","nameLabel":"Tu nombre","namePlaceholder":"Juan Pérez","ratingLabel":"Calificación","messageLabel":"Tu reseña","messagePlaceholder":"Cuéntanos cómo fue el proyecto...","submit":"Enviar reseña","submitting":"Enviando...","successMsg":"Gracias — ¡tu reseña ha sido publicada!","errorMsg":"Algo salió mal. Inténtalo de nuevo.","empty":"Aún no hay reseñas — sé el primero en compartir tu experiencia.","loading":"Cargando reseñas...","configNote":"Las reseñas se almacenan en Firebase. Agrega las claves de tu proyecto de Firebase en lib/firebase.js para activar esta función."},"aboutPage":{"eyebrow":"Nuestra historia","title":"Un equipo pequeño, trabajando con clientes en todo el mundo.","subtitle":"Virexo Technologies nació de una idea simple: las empresas no deberían necesitar cinco agencias distintas para crecer en línea.","missionEyebrow":"Nuestra misión","missionTitle":"Dar a cada cliente experiencia de agencia, sin el caos de agencia.","missionText1":"Creamos Virexo Technologies para cerrar la brecha entre lo que las empresas realmente necesitan — un sitio que funcione, anuncios que conviertan, una presencia que crezca — y la forma fragmentada en que la mayoría de las agencias lo entregan.","missionText2":"Hoy trabajamos con fundadores y equipos de marketing en los EAU, el Reino Unido, Canadá y Pakistán, tratando cada proyecto con el mismo nivel de cuidado.","founderEyebrow":"Liderazgo","founderTitle":"Conoce al fundador","founderName":"Ahtsham Aslam","founderRole":"Fundador y CEO","founderBio":"Ahtsham fundó Virexo Technologies para reunir el desarrollo y el marketing de crecimiento bajo un mismo techo, tras ver a demasiadas empresas depender de freelancers y agencias desconectadas. Lidera personalmente la estrategia y las relaciones con clientes, asegurando que cada proyecto se mantenga alineado con los objetivos reales del cliente.","clientsTitle":"Clientes globales","clientsSubtitle":"Al servicio de empresas en cuatro países, y sumando.","clients":[{"country":"Emiratos Árabes Unidos","project":"Sitio hotelero y app de servicios a domicilio"},{"country":"Reino Unido","project":"Desarrollo de sitio web escolar"},{"country":"Canadá","project":"Servicios de SEO"},{"country":"Pakistán","project":"Gestión de Google Ads"}],"valuesTitle":"Cómo trabajamos","values":[{"title":"Acceso directo","text":"Hablas directamente con quienes hacen el trabajo, no con un gestor de cuentas intermediario."},{"title":"Verdaderamente globales","text":"Cómodos trabajando entre zonas horarias, monedas e idiomas desde el primer día."},{"title":"Números, no ruido","text":"Cada servicio se mide según una métrica que realmente importa a tu negocio."},{"title":"Diseñados para moverse rápido","text":"Equipo pequeño, pocas capas, decisiones rápidas, sin sacrificar la calidad."}]},"contactPage":{"eyebrow":"Ponte en contacto","title":"Hablemos de tu proyecto.","subtitle":"Cuéntanos un poco sobre lo que necesitas — normalmente respondemos en un día hábil, estés donde estés.","formTitle":"Envíanos un mensaje","nameLabel":"Nombre completo","namePlaceholder":"Tu nombre","emailLabel":"Correo electrónico","emailPlaceholder":"tu@empresa.com","phoneLabel":"Teléfono / WhatsApp","phonePlaceholder":"+1 234 567 8900","serviceLabel":"Servicio que necesitas","messageLabel":"Detalles del proyecto","messagePlaceholder":"Cuéntanos sobre tu negocio y lo que quieres lograr...","note":"Al enviar esto, aceptas que Virexo Technologies te contacte sobre tu consulta.","submit":"Enviar mensaje","submitting":"Enviando...","successMsg":"Gracias — hemos recibido tu mensaje. Te contactaremos pronto.","detailsTitle":"Datos de contacto","emailLabelShort":"Correo electrónico","whatsappLabel":"WhatsApp","founderLabel":"Fundador","availabilityLabel":"Disponibilidad","availabilityValue":"Al servicio de clientes en todo el mundo, todas las zonas horarias","whatsappCtaText":"¿Prefieres una charla rápida? Escríbenos directamente por WhatsApp y responderemos en pocas horas.","whatsappCta":"Escribir por WhatsApp","faqTitle":"Antes de contactarnos","faqs":[{"q":"¿Trabajan con clientes fuera de su zona horaria?","a":"Sí — la mayoría de nuestros clientes están fuera de nuestra zona horaria. Nos organizamos según tu horario."},{"q":"¿Qué tan rápido pueden empezar?","a":"La mayoría de los proyectos comienzan dentro de una semana tras acordar el alcance."},{"q":"¿Ofrecen soporte continuo?","a":"Sí — cada proyecto puede pasar a un plan de mantenimiento o crecimiento continuo tras el lanzamiento."},{"q":"¿Cuánto cuesta?","a":"Depende del alcance. Comparte los detalles de tu proyecto y te enviaremos un presupuesto claro y detallado."}]},"footer":{"tagline":"Un socio digital global para desarrollo web, apps y marketing de crecimiento — fundado por Ahtsham Aslam.","servicesTitle":"Servicios","companyTitle":"Empresa","contactTitle":"Contacto","rights":"Todos los derechos reservados."},"theme":{"light":"Modo claro","dark":"Modo oscuro"}},"zh":{"dir":"ltr","nav":{"home":"首页","services":"服务","projects":"项目案例","reviews":"客户评价","about":"关于我们","contact":"联系我们","cta":"获取报价"},"hero":{"eyebrow":"Virexo Technologies · 全球数字代理机构","titleA":"我们打造能让企业","titleHighlight":"真正增长","titleB":"的数字产品。","subtitle":"网站与应用开发、SEO优化、谷歌广告投放、数字营销以及社交媒体运营 —— 一个专业团队，服务全球客户。","ctaPrimary":"开始项目","ctaSecondary":"探索服务","statProjects":"已交付项目","statCountries":"服务国家","statRetention":"客户留存率","statSupport":"全球支持"},"logos":{"label":"深受全球创始人与团队信赖","note":"稍后替换为真实客户标志"},"home":{"servicesEyebrow":"我们的服务","servicesTitle":"五大专业领域，一个负责任的团队。","servicesSubtitle":"所有服务均由内部团队完成 —— 无外包，无交接断层。","viewAll":"查看全部服务","projectsEyebrow":"我们的作品","projectsTitle":"真实项目、真实客户、真实成果。","viewAllProjects":"查看全部项目","ctaTitle":"告诉我们您想发展的方向。","ctaTitle2":"我们会告诉您如何实现它。","ctaSubtitle":"免费20分钟咨询 —— 无任何义务，无论您身在何处。","ctaButton":"预约咨询","whatsappButton":"通过WhatsApp联系"},"servicesPage":{"eyebrow":"我们的服务","title":"成长型品牌所需的一切，尽在一处。","subtitle":"五大专业领域，由一个负责任的团队为全球客户提供服务。","items":[{"title":"家政服务应用开发","tag":"移动应用 · 阿联酋项目","description":"功能齐全的按需家政服务应用 —— 预约、实时追踪、应用内支付及服务商管理，专为规模化设计。"},{"title":"酒店网站开发","tag":"网页平台 · 迪拜项目","description":"为迪拜酒店客户打造的可预订网站，具备多语言页面、房间可用性查询及流畅的预订流程。"},{"title":"学校网站开发","tag":"网页平台 · 英国项目","description":"为英国教育机构打造的现代化、无障碍学校网站 —— 包含招生表单、教职工门户及家长沟通中心。"},{"title":"SEO优化服务","tag":"自然增长 · 加拿大客户","description":"通过技术审查、内容策略与外链建设，帮助加拿大客户从搜索结果第三页跃升至榜首。"},{"title":"谷歌广告管理","tag":"付费推广 · 巴基斯坦客户","description":"为巴基斯坦客户打造的搜索及智能购物广告系列，持续优化广告支出回报率。"}],"processTitle":"以清晰为核心，杜绝意外的合作流程。","steps":[{"title":"了解需求","text":"在提出任何方案之前，我们会先充分了解您的业务、目标与受众。"},{"title":"制定计划","text":"明确的项目范围、时间表与成功指标，在开始前达成一致。"},{"title":"构建与上线","text":"设计、开发或广告投放，并伴随定期沟通反馈。"},{"title":"持续增长","text":"上线后持续优化与报告，让效果不断提升。"}]},"projectsPage":{"eyebrow":"我们的作品","title":"建立在全球合作之上的项目案例。","subtitle":"精选来自四大洲的客户项目。","label":"客户项目","items":[{"title":"迪拜酒店网站","country":"阿联酋","description":"为迪拜精品酒店打造的高端预订网站，具备实时房态与多语言宾客体验。"},{"title":"英国学校网站","country":"英国","description":"为英国中学打造的以招生为核心的网站，注重无障碍访问与教职工便捷更新。"},{"title":"家政服务应用","country":"阿联酋","description":"连接客户与经过审核的服务商的按需家政应用，涵盖预约到应用内支付全流程。"},{"title":"加拿大SEO推广活动","country":"加拿大","description":"为多伦多一家专业服务客户提供的为期12个月的SEO合作，使自然流量增长三倍。"},{"title":"巴基斯坦谷歌广告投放","country":"巴基斯坦","description":"以效果为导向重组的谷歌广告账户，两个月内将每条线索成本降低近40%。"}]},"reviewsPage":{"eyebrow":"客户心声","title":"客户对与我们合作的评价。","subtitle":"来自真实项目的真实反馈 —— 欢迎在下方分享您的评价。","formTitle":"分享您的体验","nameLabel":"您的姓名","namePlaceholder":"请输入姓名","ratingLabel":"评分","messageLabel":"您的评价","messagePlaceholder":"告诉我们项目进展如何...","submit":"提交评价","submitting":"提交中...","successMsg":"谢谢 —— 您的评价已发布！","errorMsg":"出现错误，请重试。","empty":"暂无评价 —— 快来分享您的第一条体验吧。","loading":"评价加载中...","configNote":"评价数据存储在 Firebase 中。请在 lib/firebase.js 中添加您的 Firebase 项目密钥以完全启用此功能。"},"aboutPage":{"eyebrow":"我们的故事","title":"一个小团队，服务全球客户。","subtitle":"Virexo Technologies 源于一个简单的理念：企业不应该需要五家不同的代理机构才能实现线上增长。","missionEyebrow":"我们的使命","missionTitle":"为每位客户提供代理机构级别的专业能力，却没有代理机构的混乱。","missionText1":"我们创立 Virexo Technologies，旨在弥合企业真正所需 —— 高性能网站、能带来转化的广告、不断增长的品牌影响力 —— 与大多数代理机构碎片化、交接繁琐的服务方式之间的差距。","missionText2":"如今，我们与阿联酋、英国、加拿大及巴基斯坦的创始人和营销团队合作，以同样的用心对待每一个项目。","founderEyebrow":"领导团队","founderTitle":"认识我们的创始人","founderName":"Ahtsham Aslam","founderRole":"创始人兼首席执行官","founderBio":"Ahtsham 创立 Virexo Technologies，是因为看到太多企业依赖分散的自由职业者和互不衔接的代理机构，因此决定将开发与增长营销整合于一处。他亲自主导战略制定与客户关系，确保每个项目都紧扣客户的真实目标。","clientsTitle":"全球客户","clientsSubtitle":"服务遍及四个国家，并持续增长。","clients":[{"country":"阿拉伯联合酋长国","project":"酒店网站与家政服务应用"},{"country":"英国","project":"学校网站开发"},{"country":"加拿大","project":"SEO优化服务"},{"country":"巴基斯坦","project":"谷歌广告管理"}],"valuesTitle":"我们的工作方式","values":[{"title":"直接沟通","text":"您将直接与实际执行工作的人交流，而非通过客户经理转达。"},{"title":"真正的全球化","text":"从第一天起就能自如应对不同时区、货币与语言。"},{"title":"重数据，轻噪音","text":"每项服务都以真正影响您业务的指标来衡量。"},{"title":"追求高效","text":"小团队、扁平化决策、快速响应，同时绝不牺牲质量。"}]},"contactPage":{"eyebrow":"联系我们","title":"让我们聊聊您的项目。","subtitle":"简单告诉我们您的需求 —— 无论您身处何地，我们通常会在一个工作日内回复。","formTitle":"给我们留言","nameLabel":"姓名","namePlaceholder":"请输入您的姓名","emailLabel":"电子邮箱","emailPlaceholder":"you@company.com","phoneLabel":"电话 / WhatsApp","phonePlaceholder":"+1 234 567 8900","serviceLabel":"所需服务","messageLabel":"项目详情","messagePlaceholder":"告诉我们您的业务以及希望达成的目标...","note":"提交即表示您同意 Virexo Technologies 就您的咨询与您联系。","submit":"发送信息","submitting":"发送中...","successMsg":"谢谢 —— 我们已收到您的信息，会尽快与您联系。","detailsTitle":"联系方式","emailLabelShort":"电子邮箱","whatsappLabel":"WhatsApp","founderLabel":"创始人","availabilityLabel":"服务时间","availabilityValue":"服务全球客户，覆盖所有时区","whatsappCtaText":"想要快速沟通？直接通过 WhatsApp 联系我们，我们会在几小时内回复。","whatsappCta":"通过WhatsApp留言","faqTitle":"联系我们之前","faqs":[{"q":"你们是否与不同时区的客户合作？","a":"是的 —— 我们的大多数客户都不在我们所在时区，我们会配合您的时间安排。"},{"q":"多久可以开始项目？","a":"在确认项目范围后，大多数项目会在一周内启动。"},{"q":"是否提供持续支持？","a":"是的 —— 项目上线后可转为持续维护或增长服务套餐。"},{"q":"费用是多少？","a":"费用取决于项目范围。请提供项目详情，我们将提供清晰、详细的报价。"}]},"footer":{"tagline":"专注网站、应用与增长营销的全球数字合作伙伴 —— 由 Ahtsham Aslam 创立。","servicesTitle":"服务","companyTitle":"公司","contactTitle":"联系方式","rights":"版权所有。"},"theme":{"light":"浅色模式","dark":"深色模式"}}};
+const LANGS = [
+  { code:"en", native:"English" },
+  { code:"ar", native:"العربية" },
+  { code:"fr", native:"Français" },
+  { code:"es", native:"Español" },
+  { code:"zh", native:"中文" },
+];
+const brand = { en:"Virexo Technologies", ar:"فيريكسو تكنولوجيز", fr:"Virexo Technologies", es:"Virexo Technologies", zh:"Virexo Technologies" };
+const orbitCore = { en:"GLOBAL\nDELIVERY", ar:"تسليم\nعالمي", fr:"LIVRAISON\nMONDIALE", es:"ENTREGA\nGLOBAL", zh:"全球\n交付" };
+
+let currentLang = localStorage.getItem("virexo-lang") || "en";
+if (!translations[currentLang]) currentLang = "en";
+
+function getPath(obj, path){
+  return path.split(".").reduce((acc,key)=> (acc && acc[key]!==undefined ? acc[key] : undefined), obj);
+}
+function t(path){
+  const dict = translations[currentLang] || translations.en;
+  const v = getPath(dict, path);
+  if (v !== undefined) return v;
+  return getPath(translations.en, path) ?? path;
+}
+
+/* ---- apply translations to all data-i18n / data-i18n-placeholder elements ---- */
+function applyTranslations(){
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = (translations[currentLang] || translations.en).dir || "ltr";
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if (key === "brand"){ el.textContent = brand[currentLang] || brand.en; return; }
+    if (key === "orbitCore"){ el.textContent = orbitCore[currentLang] || orbitCore.en; return; }
+    const val = t(key);
+    if (typeof val === "string") el.textContent = val;
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+    const key = el.getAttribute("data-i18n-placeholder");
+    const val = t(key);
+    if (typeof val === "string") el.placeholder = val;
+  });
+
+  renderDynamicLists();
+  renderReviews();
+}
+
+/* ---- dynamic list sections (arrays differ per language) ----
+   Images are real photos pulled from Unsplash (free-to-use), picked to
+   match each project/service's theme. Swap any URL below for your own
+   real project screenshots whenever you have them — just replace the
+   string, the layout/sizing is already handled. */
+const serviceIcons = ["💻","🔍","🎯","📈","📣"];
+const serviceImgs = [
+"https://images.unsplash.com/photo-1726066012801-14d892021339?auto=format&fit=crop&w=800&q=80", // App Development — mobile app UI// /app development — code on screens
+  "https://images.unsplash.com/photo-1754039984985-ef607d80113a?auto=format&fit=crop&w=800&q=80", // web/app development — code on screens 
+"https://images.unsplash.com/photo-1759215524600-7971d6a4dac0?auto=format&fit=crop&w=800&q=80", // Social Media Marketing — analytics on phone 
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", // SEO — search analytics on screen// SEO — search analytics on screen
+  "https://images.unsplash.com/photo-1593437955835-fc8c51725430?auto=format&fit=crop&w=800&q=80", // Google Ads Management — search analytics // Google Ads — phone with marketing/ad icons
+];
+const projectImgs = [
+"https://images.unsplash.com/photo-1749273858638-ea678cb48e94?auto=format&fit=crop&w=1000&q=80", // Dubai Hotel Website — Burj Khalifa, Dubai (verified real photo) // Dubai Hotel Website — Burj Khalifa, Dubai (verified real photo)
+  "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=80", // UK School Website — school/university building
+  "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1000&q=80", // Home Service App — phone home screen full of app icons
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80", // Canada SEO Campaign — analytics/growth dashboard
+  "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1000&q=80", // Pakistan Google Ads Campaign — marketing performance charts
+];
+const clientFlags = ["🇦🇪","🇬🇧","🇨🇦","🇵🇰"];
+const valueIcons = ["🤝","🌐","📊","⚡"];
+
+function renderDynamicLists(){
+  const services = t("servicesPage.items") || [];
+  document.getElementById("servicesGrid").innerHTML = services.map((s,i)=>`
+    <div class="card reveal" style="transition-delay:${(i%3)*80}ms">
+      <div class="card-media"><img src="${serviceImgs[i%serviceImgs.length]}" alt="${s.title}" loading="lazy"></div>
+      <div class="card-body">
+        <span class="tag-pill">${s.tag}</span>
+        <h3>${s.title}</h3>
+        <p>${s.description}</p>
+      </div>
+    </div>`).join("");
+
+  const projects = t("projectsPage.items") || [];
+  const label = t("projectsPage.label");
+  document.getElementById("projectsGrid").innerHTML = projects.map((p,i)=>`
+    <div class="proj-card reveal" style="transition-delay:${(i%3)*80}ms">
+      <div class="proj-media">
+        <img src="${projectImgs[i%projectImgs.length]}" alt="${p.title}" loading="lazy">
+        <span class="proj-badge">${label}</span>
+        <span class="proj-country">${p.country}</span>
+      </div>
+      <div class="proj-body">
+        <h3>${p.title}</h3>
+        <p class="body-text" style="margin-top:8px;">${p.description}</p>
+      </div>
+    </div>`).join("");
+
+  const clients = t("aboutPage.clients") || [];
+  document.getElementById("clientsGrid").innerHTML = clients.map((c,i)=>`
+    <div class="card reveal" style="transition-delay:${(i%4)*80}ms"><div class="card-body center">
+      <div style="font-size:30px; margin-bottom:10px;">${clientFlags[i%clientFlags.length]}</div>
+      <h3>${c.country}</h3>
+      <p>${c.project}</p>
+    </div></div>`).join("");
+
+  const values = t("aboutPage.values") || [];
+  document.getElementById("valuesGrid").innerHTML = values.map((v,i)=>`
+    <div class="card reveal" style="transition-delay:${(i%4)*80}ms"><div class="card-body">
+      <div class="icon">${valueIcons[i%valueIcons.length]}</div>
+      <h3>${v.title}</h3>
+      <p>${v.text}</p>
+    </div></div>`).join("");
+
+  const faqs = t("contactPage.faqs") || [];
+  document.getElementById("faqGrid").innerHTML = faqs.map((f,i)=>`
+    <div class="card reveal" style="transition-delay:${(i%2)*80}ms"><div class="card-body">
+      <h3>${f.q}</h3>
+      <p>${f.a}</p>
+    </div></div>`).join("");
+
+  document.getElementById("footServices").innerHTML = services.map(s=>`<li><a href="#services">${s.title}</a></li>`).join("");
+
+  const select = document.getElementById("cService");
+  select.innerHTML = services.map(s=>`<option>${s.title}</option>`).join("") + `<option>${ {en:"Not sure yet",ar:"لست متأكداً بعد",fr:"Pas encore sûr",es:"Aún no lo sé",zh:"尚不确定"}[currentLang] || "Not sure yet" }</option>`;
+
+  // ---------------------------------------------------------------------
+  // 🔶 LOGO SECTION (placeholder) — this builds the scrolling logo strip.
+  // To use your own client logos: replace each name below with
+  // `<img src="your-logo.png" alt="Client name">` instead of plain text,
+  // e.g. `<div class="logo-chip"><img src="logo1.png" style="max-height:32px"></div>`
+  // ---------------------------------------------------------------------
+  const logoNames = ["UAE Hospitality Co.","Northbridge School","Maple SEO Partners","Lahore Retail Group","Gulf Home Services","Toronto Consulting"];
+  const chips = [...logoNames, ...logoNames].map(n=>`<div class="logo-chip" title="Replace with real company logo later">${n}</div>`).join("");
+  document.getElementById("marqueeTrack").innerHTML = chips;
+
+  // re-observe any newly injected .reveal elements so they animate on scroll
+  setupReveal();
+  animateStats();
+}
+
+/* ---- reviews: stored locally in this browser (demo backend) ---- */
+const DEMO_REVIEWS = [
+  { name:"Sara M.", rating:5, message:"Virexo rebuilt our hotel site and bookings went up within weeks." },
+  { name:"James O.", rating:5, message:"Our Google Ads cost per lead dropped almost 40%. Clear reporting, no fluff." },
+  { name:"Fatima A.", rating:4, message:"Great SEO team — traffic has grown steadily every month since we started." },
+];
+function getReviews(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("virexo-reviews") || "null");
+    return saved && saved.length ? saved : DEMO_REVIEWS;
+  }catch(e){ return DEMO_REVIEWS; }
+}
+function renderReviews(){
+  const list = getReviews();
+  document.getElementById("reviewsGrid").innerHTML = list.map((r,i)=>`
+    <div class="review-card reveal" style="transition-delay:${(i%4)*70}ms">
+      <div class="stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</div>
+      <p class="body-text">"${r.message}"</p>
+      <div class="review-who">
+        <div class="review-avatar">${(r.name||"?").trim().charAt(0).toUpperCase()}</div>
+        <span style="font-weight:600; font-size:14px;">${r.name}</span>
+      </div>
+    </div>`).join("");
+  setupReveal();
+}
+
+/* ---- automation: auto-rotating testimonial spotlight (cycles reviews) ---- */
+let spotlightTimer = null;
+let spotlightIndex = 0;
+function paintSpotlight(){
+  const list = getReviews();
+  const quoteEl = document.getElementById("spotlightQuote");
+  const dotsEl = document.getElementById("spotlightDots");
+  if (!quoteEl || !dotsEl || !list.length) return;
+  if (spotlightIndex >= list.length) spotlightIndex = 0;
+  const r = list[spotlightIndex];
+  quoteEl.style.opacity = 0;
+  setTimeout(()=>{
+    quoteEl.innerHTML = `<div class="stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</div>"${r.message}"<span class="who">— ${r.name}</span>`;
+    quoteEl.style.opacity = 1;
+  }, 250);
+  dotsEl.innerHTML = list.map((_,i)=>`<span data-i="${i}" class="${i===spotlightIndex?'active':''}"></span>`).join("");
+}
+function setupTestimonialSpotlight(){
+  const box = document.getElementById("testimonialSpotlight");
+  if (!box) return;
+  paintSpotlight();
+  function start(){
+    stop();
+    spotlightTimer = setInterval(()=>{
+      spotlightIndex = (spotlightIndex + 1) % Math.max(getReviews().length, 1);
+      paintSpotlight();
+    }, 4500);
+  }
+  function stop(){ if (spotlightTimer) clearInterval(spotlightTimer); }
+  start();
+  box.addEventListener("mouseenter", stop);
+  box.addEventListener("mouseleave", start);
+  document.getElementById("spotlightDots").addEventListener("click", (e)=>{
+    if (e.target.dataset.i === undefined) return;
+    spotlightIndex = Number(e.target.dataset.i);
+    paintSpotlight();
+    start();
+  });
+}
+
+
+/* ---- star input for review form ---- */
+let selectedRating = 5;
+function paintStars(){
+  document.querySelectorAll("#starInput span").forEach(s=>{
+    s.classList.toggle("active", Number(s.dataset.v) <= selectedRating);
+  });
+}
+document.getElementById("starInput").addEventListener("click", (e)=>{
+  if (e.target.dataset.v){ selectedRating = Number(e.target.dataset.v); paintStars(); }
+});
+
+/* ---- review form submit ---- */
+document.getElementById("reviewForm").addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const name = document.getElementById("reviewName").value.trim();
+  const message = document.getElementById("reviewMessage").value.trim();
+  if (!name || !message) return;
+  const list = getReviews().filter(r=>r !== DEMO_REVIEWS); // keep it simple
+  const updated = [{ name, rating:selectedRating, message }, ...getReviews()];
+  localStorage.setItem("virexo-reviews", JSON.stringify(updated));
+  document.getElementById("reviewName").value = "";
+  document.getElementById("reviewMessage").value = "";
+  selectedRating = 5; paintStars();
+  const status = document.getElementById("reviewStatus");
+  status.textContent = t("reviewsPage.successMsg");
+  status.classList.add("show");
+  renderReviews();
+  spotlightIndex = 0;
+  paintSpotlight();
+});
+paintStars();
+
+/* ---- contact form submit ---- */
+document.getElementById("contactForm").addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const name = document.getElementById("cName").value.trim();
+  const service = document.getElementById("cService").value;
+  const message = document.getElementById("cMessage").value.trim();
+  const status = document.getElementById("contactStatus");
+  status.textContent = t("contactPage.successMsg");
+  status.classList.add("show");
+  const waText = encodeURIComponent(`Hi Virexo Technologies, I'm ${name || "..."}. I'm interested in ${service || "your services"}. ${message || ""}`);
+  document.getElementById("waSendLink").href = `https://wa.me/966581028494?text=${waText}`;
+  document.getElementById("contactAltLinks").style.display = "flex";
+});
+
+/* ---- language switcher ---- */
+const langMenu = document.getElementById("langMenu");
+langMenu.innerHTML = LANGS.map(l=>`<button data-code="${l.code}">${l.native}</button>`).join("");
+langMenu.addEventListener("click",(e)=>{
+  const code = e.target.dataset.code;
+  if (!code) return;
+  currentLang = code;
+  localStorage.setItem("virexo-lang", code);
+  applyTranslations();
+  langMenu.classList.remove("open");
+});
+document.getElementById("langBtn").addEventListener("click", ()=> langMenu.classList.toggle("open"));
+document.addEventListener("click",(e)=>{
+  if (!e.target.closest(".lang-wrap")) langMenu.classList.remove("open");
+});
+
+/* ---- theme toggle ---- */
+const themeBtn = document.getElementById("themeBtn");
+function applyTheme(theme){
+  document.documentElement.classList.toggle("dark", theme === "dark");
+  themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+  localStorage.setItem("virexo-theme", theme);
+}
+let savedTheme = localStorage.getItem("virexo-theme");
+if (!savedTheme){ savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+applyTheme(savedTheme);
+themeBtn.addEventListener("click", ()=>{
+  const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+  applyTheme(next);
+});
+
+/* ---- mobile nav ---- */
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+navToggle.addEventListener("click", ()=> navLinks.classList.toggle("open"));
+navLinks.querySelectorAll("a").forEach(a=> a.addEventListener("click", ()=> navLinks.classList.remove("open")));
+
+/* ---- scroll reveal ---- */
+function setupReveal(){
+  const els = document.querySelectorAll(".reveal:not(.in)");
+  if ("IntersectionObserver" in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if (entry.isIntersecting){ entry.target.classList.add("in"); io.unobserve(entry.target); }
+      });
+    }, { threshold:0.12, rootMargin:"0px 0px -40px 0px" });
+    els.forEach(el=> io.observe(el));
+  } else {
+    els.forEach(el=> el.classList.add("in"));
+  }
+}
+
+/* ---- automation: animated counting stats, triggered once when scrolled into view ---- */
+let statsAnimated = false;
+function animateStats(){
+  const strip = document.getElementById("statStrip");
+  if (!strip || statsAnimated) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if (entry.isIntersecting && !statsAnimated){
+        statsAnimated = true;
+        strip.querySelectorAll(".num[data-target]").forEach(el=>{
+          const target = Number(el.dataset.target);
+          const suffix = el.dataset.suffix || "";
+          const duration = 1400;
+          const start = performance.now();
+          function tick(now){
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            el.textContent = Math.round(target * eased) + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        });
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  io.observe(strip);
+}
+
+/* ---- automation: generate twinkling stars in the hero background ---- */
+function buildStars(){
+  const layer = document.getElementById("starsLayer");
+  if (!layer) return;
+  const count = window.innerWidth < 700 ? 35 : 70;
+  let html = "";
+  for (let i = 0; i < count; i++){
+    const top = Math.random() * 100;
+    const left = Math.random() * 100;
+    const size = Math.random() * 1.6 + 1;
+    const delay = Math.random() * 3.5;
+    const dur = 2.5 + Math.random() * 3;
+    html += `<span class="star" style="top:${top}%; left:${left}%; width:${size}px; height:${size}px; animation-delay:${delay}s; animation-duration:${dur}s;"></span>`;
+  }
+  layer.innerHTML = html;
+}
+
+/* ---- automation: scroll progress bar under the nav ---- */
+function setupScrollProgress(){
+  const bar = document.getElementById("scrollProgress");
+  if (!bar) return;
+  function update(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + "%";
+  }
+  document.addEventListener("scroll", update, { passive:true });
+  update();
+}
+
+/* ---- automation: gold cursor glow following the mouse in the hero ---- */
+function setupCursorGlow(){
+  const hero = document.querySelector(".hero");
+  const glow = document.getElementById("cursorGlow");
+  if (!hero || !glow) return;
+  const canHover = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if (!canHover) return;
+  hero.addEventListener("mousemove", (e)=>{
+    const r = hero.getBoundingClientRect();
+    glow.style.transform = `translate(${e.clientX - r.left}px, ${e.clientY - r.top}px) translate(-50%,-50%)`;
+  });
+}
+
+
+function setupOrbitParallax(){
+  const stage = document.querySelector(".orbit-stage");
+  const hero = document.querySelector(".hero");
+  if (!stage || !hero) return;
+  const canHover = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if (!canHover) return;
+  hero.addEventListener("mousemove", (e)=>{
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    stage.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+  });
+  hero.addEventListener("mouseleave", ()=>{
+    stage.style.transform = "";
+  });
+  stage.style.transition = "transform .3s ease-out";
+}
+
+/* ---- orbit hero: build nodes on outer/inner rings ---- */
+function buildOrbit(){
+  const outerIcons = ["💻","🔍","📣"];
+  const innerIcons = ["📱","📈","🎯"];
+  const outer = document.getElementById("orbitOuter");
+  const inner = document.getElementById("orbitInner");
+  outer.innerHTML = outerIcons.map((icon,i)=>{
+    const angle = (360/outerIcons.length)*i;
+    return `<div class="orbit-node-holder" style="transform:rotate(${angle}deg)">
+      <div class="orbit-node-inner"><div class="orbit-node counter-normal">${icon}</div></div>
+    </div>`;
+  }).join("");
+  inner.innerHTML = innerIcons.map((icon,i)=>{
+    const angle = 60 + (360/innerIcons.length)*i;
+    return `<div class="orbit-node-holder" style="transform:rotate(${angle}deg)">
+      <div class="orbit-node-inner"><div class="orbit-node counter-reverse">${icon}</div></div>
+    </div>`;
+  }).join("");
+}
+
+/* ---- nav active link highlight on scroll ---- */
+function setupActiveNav(){
+  const sections = ["home","services","projects","reviews","about","contact"].map(id=>document.getElementById(id));
+  const links = document.querySelectorAll(".nav-links a[href^='#']");
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if (entry.isIntersecting){
+        links.forEach(l=> l.classList.toggle("active", l.getAttribute("href") === "#"+entry.target.id));
+      }
+    });
+  }, { threshold:0.4 });
+  sections.forEach(s=> s && io.observe(s));
+}
+
+/* ---- init ---- */
+buildOrbit();
+buildStars();
+applyTranslations();
+setupReveal();
+setupActiveNav();
+setupOrbitParallax();
+setupScrollProgress();
+setupCursorGlow();
+setupTestimonialSpotlight();
+</script>
+</body>
+</html>
