@@ -466,7 +466,7 @@ form.form{display:flex; flex-direction:column; gap:16px;}
 
 .divider{height:1px; background:var(--line); margin:50px 0;}
 [data-i18n-hidden]{display:none;}
-  /* ============ EXTRA RESPONSIVE FIXES (mobile / tablet / laptop) ============ */
+/* ============ EXTRA RESPONSIVE FIXES (mobile / tablet / laptop) ============ */
 
 /* Reviews section: form + reviews ka 1fr/1.4fr grid mobile/tablet pe squeeze ho raha tha */
 @media (max-width:900px){
@@ -718,8 +718,9 @@ form.form{display:flex; flex-direction:column; gap:16px;}
     </div>
 
     <div class="grid" style="grid-template-columns:1fr 1.4fr; gap:44px; align-items:start;" id="reviewsLayout">
-      <form class="quote-card reveal" id="reviewForm" name="reviews" method="POST" data-netlify="true" style="display:flex; flex-direction:column; gap:16px;">   <input type="hidden" name="form-name" value="reviews">
-        <h3 data-i18n="reviewsPage.formTitle">Share your experience</h3>
+<form class="quote-card reveal" id="reviewForm" name="reviews" method="POST" data-netlify="true" style="display:flex; flex-direction:column; gap:16px;">
+  <input type="hidden" name="form-name" value="reviews">
+          <h3 data-i18n="reviewsPage.formTitle">Share your experience</h3>
         <div class="field">
           <label data-i18n="reviewsPage.nameLabel">Your name</label>
           <input type="text" id="reviewName" required data-i18n-placeholder="reviewsPage.namePlaceholder">
@@ -1151,11 +1152,25 @@ document.getElementById("starInput").addEventListener("click", (e)=>{
 });
 
 /* ---- review form submit ---- */
+/* ---- review form submit ---- */
 document.getElementById("reviewForm").addEventListener("submit", (e)=>{
   e.preventDefault();
   const name = document.getElementById("reviewName").value.trim();
   const message = document.getElementById("reviewMessage").value.trim();
   if (!name || !message) return;
+
+  // ---- ye 6 lines Netlify ke apne backend mein review save karti hain ----
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      "form-name": "reviews",
+      name: name,
+      rating: String(selectedRating),
+      message: message
+    }).toString()
+  }).catch(err => console.error("Netlify save error:", err));
+
   const list = getReviews().filter(r=>r !== DEMO_REVIEWS); // keep it simple
   const updated = [{ name, rating:selectedRating, message }, ...getReviews()];
   localStorage.setItem("virexo-reviews", JSON.stringify(updated));
