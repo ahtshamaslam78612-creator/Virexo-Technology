@@ -466,6 +466,31 @@ form.form{display:flex; flex-direction:column; gap:16px;}
 
 .divider{height:1px; background:var(--line); margin:50px 0;}
 [data-i18n-hidden]{display:none;}
+  /* ============ EXTRA RESPONSIVE FIXES (mobile / tablet / laptop) ============ */
+
+/* Reviews section: form + reviews ka 1fr/1.4fr grid mobile/tablet pe squeeze ho raha tha */
+@media (max-width:900px){
+  #reviewsLayout{
+    grid-template-columns:1fr !important;
+  }
+}
+
+/* Bohot chhoti phone screens pe navbar ka brand text overflow na ho */
+@media (max-width:380px){
+  .brand{ font-size:13px; }
+  .brand span{ max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+}
+
+/* Long email/contact values chhoti screen pe overflow na karein */
+@media (max-width:480px){
+  .contact-list .val{ word-break:break-word; }
+}
+
+/* Chhoti landscape phones (jaisay phone ko ghumaya ho) ke liye orbit safety */
+@media (max-width:480px) and (orientation:landscape){
+  .orbit-stage{ width:200px; height:200px; }
+  .hero-statue{ width:150px; }
+}
 </style>
 </head>
 <body>
