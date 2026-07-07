@@ -718,7 +718,7 @@ form.form{display:flex; flex-direction:column; gap:16px;}
     </div>
 
     <div class="grid" style="grid-template-columns:1fr 1.4fr; gap:44px; align-items:start;" id="reviewsLayout">
-      <form class="quote-card reveal" id="reviewForm" style="display:flex; flex-direction:column; gap:16px;">
+      <form class="quote-card reveal" id="reviewForm" name="reviews" method="POST" data-netlify="true" style="display:flex; flex-direction:column; gap:16px;">   <input type="hidden" name="form-name" value="reviews">
         <h3 data-i18n="reviewsPage.formTitle">Share your experience</h3>
         <div class="field">
           <label data-i18n="reviewsPage.nameLabel">Your name</label>
