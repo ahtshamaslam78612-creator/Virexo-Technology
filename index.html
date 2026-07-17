@@ -1073,17 +1073,14 @@ function renderDynamicLists(){
   animateStats();
 }
 
-/* ---- reviews: stored locally in this browser (demo backend) ---- */
+/* ---- reviews: stored on backend (Netlify Forms) only, no localStorage ---- */
 const DEMO_REVIEWS = [
   { name:"Sara M.", rating:5, message:"Virexo rebuilt our hotel site and bookings went up within weeks." },
   { name:"James O.", rating:5, message:"Our Google Ads cost per lead dropped almost 40%. Clear reporting, no fluff." },
   { name:"Fatima A.", rating:4, message:"Great SEO team — traffic has grown steadily every month since we started." },
 ];
 function getReviews(){
-  try{
-    const saved = JSON.parse(localStorage.getItem("virexo-reviews") || "null");
-    return saved && saved.length ? saved : DEMO_REVIEWS;
-  }catch(e){ return DEMO_REVIEWS; }
+  return DEMO_REVIEWS;
 }
 function renderReviews(){
   const list = getReviews();
@@ -1151,15 +1148,16 @@ document.getElementById("starInput").addEventListener("click", (e)=>{
   if (e.target.dataset.v){ selectedRating = Number(e.target.dataset.v); paintStars(); }
 });
 
-/* ---- review form submit ---- */
-/* ---- review form submit ---- */
+/* ---- review form submit: sends only to Netlify Forms backend ---- */
 document.getElementById("reviewForm").addEventListener("submit", (e)=>{
   e.preventDefault();
   const name = document.getElementById("reviewName").value.trim();
   const message = document.getElementById("reviewMessage").value.trim();
   if (!name || !message) return;
 
-  // ---- ye 6 lines Netlify ke apne backend mein review save karti hain ----
+  const status = document.getElementById("reviewStatus");
+
+  // ---- Netlify Forms backend: this is the ONLY place the review is stored ----
   fetch("/", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -1169,35 +1167,56 @@ document.getElementById("reviewForm").addEventListener("submit", (e)=>{
       rating: String(selectedRating),
       message: message
     }).toString()
-  }).catch(err => console.error("Netlify save error:", err));
+  }).then(()=>{
+    status.textContent = t("reviewsPage.successMsg");
+    status.classList.add("show");
+  }).catch(err=>{
+    console.error("Review backend save error:", err);
+    status.textContent = t("reviewsPage.errorMsg");
+    status.classList.add("show");
+  });
 
-  const list = getReviews().filter(r=>r !== DEMO_REVIEWS); // keep it simple
-  const updated = [{ name, rating:selectedRating, message }, ...getReviews()];
-  localStorage.setItem("virexo-reviews", JSON.stringify(updated));
   document.getElementById("reviewName").value = "";
   document.getElementById("reviewMessage").value = "";
   selectedRating = 5; paintStars();
-  const status = document.getElementById("reviewStatus");
-  status.textContent = t("reviewsPage.successMsg");
-  status.classList.add("show");
-  renderReviews();
-  spotlightIndex = 0;
-  paintSpotlight();
 });
 paintStars();
 
-/* ---- contact form submit ---- */
+/* ---- contact form submit: auto-emails backend + auto-opens WhatsApp with the details ---- */
 document.getElementById("contactForm").addEventListener("submit", (e)=>{
   e.preventDefault();
   const name = document.getElementById("cName").value.trim();
+  const email = document.getElementById("cEmail").value.trim();
+  const phone = document.getElementById("cPhone").value.trim();
   const service = document.getElementById("cService").value;
   const message = document.getElementById("cMessage").value.trim();
   const status = document.getElementById("contactStatus");
+
+  const waText = encodeURIComponent(`Hi Virexo Technologies, I'm ${name || "..."}. Email: ${email || "-"}. Phone: ${phone || "-"}. I'm interested in ${service || "your services"}. ${message || ""}`);
+  const waLink = `https://wa.me/923704869331?text=${waText}`;
+  document.getElementById("waSendLink").href = waLink;
+
+  // ---- Auto-send an email with these details (no manual backend needed) ----
+  fetch("https://formsubmit.co/ajax/techvirexo@gmail.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      Name: name,
+      Email: email,
+      Phone: phone,
+      Service: service,
+      Message: message,
+      _subject: "New enquiry from website - " + (name || "Unknown")
+    })
+  }).catch(err=> console.error("Email send error:", err));
+
+  // ---- Auto-open WhatsApp with the same details pre-filled ----
+  window.open(waLink, "_blank");
+
   status.textContent = t("contactPage.successMsg");
   status.classList.add("show");
-  const waText = encodeURIComponent(`Hi Virexo Technologies, I'm ${name || "..."}. I'm interested in ${service || "your services"}. ${message || ""}`);
-  document.getElementById("waSendLink").href = `https://wa.me/923704869331?text=${waText}`;
   document.getElementById("contactAltLinks").style.display = "flex";
+  e.target.reset();
 });
 
 /* ---- language switcher ---- */
