@@ -718,22 +718,24 @@ form.form{display:flex; flex-direction:column; gap:16px;}
     </div>
 
     <div class="grid" style="grid-template-columns:1fr 1.4fr; gap:44px; align-items:start;" id="reviewsLayout">
-<form class="quote-card reveal" id="reviewForm" name="reviews" method="POST" data-netlify="true" style="display:flex; flex-direction:column; gap:16px;">
+<form class="quote-card reveal" id="reviewForm" name="reviews" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:flex; flex-direction:column; gap:16px;">
   <input type="hidden" name="form-name" value="reviews">
+  <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
           <h3 data-i18n="reviewsPage.formTitle">Share your experience</h3>
         <div class="field">
           <label data-i18n="reviewsPage.nameLabel">Your name</label>
-          <input type="text" id="reviewName" required data-i18n-placeholder="reviewsPage.namePlaceholder">
+          <input type="text" id="reviewName" name="name" required data-i18n-placeholder="reviewsPage.namePlaceholder">
         </div>
         <div class="field">
           <label data-i18n="reviewsPage.ratingLabel">Rating</label>
           <div class="star-input" id="starInput">
             <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
           </div>
+          <input type="hidden" id="reviewRatingField" name="rating" value="5">
         </div>
         <div class="field">
           <label data-i18n="reviewsPage.messageLabel">Your review</label>
-          <textarea id="reviewMessage" required data-i18n-placeholder="reviewsPage.messagePlaceholder"></textarea>
+          <textarea id="reviewMessage" name="message" required data-i18n-placeholder="reviewsPage.messagePlaceholder"></textarea>
         </div>
         <button type="submit" class="btn btn-primary" style="align-self:flex-start;" data-i18n="reviewsPage.submit">Submit review</button>
         <p class="form-status" id="reviewStatus"></p>
@@ -1145,7 +1147,12 @@ function paintStars(){
   });
 }
 document.getElementById("starInput").addEventListener("click", (e)=>{
-  if (e.target.dataset.v){ selectedRating = Number(e.target.dataset.v); paintStars(); }
+  if (e.target.dataset.v){
+    selectedRating = Number(e.target.dataset.v);
+    paintStars();
+    const ratingField = document.getElementById("reviewRatingField");
+    if (ratingField) ratingField.value = String(selectedRating);
+  }
 });
 
 /* ---- review form submit: sends only to Netlify Forms backend ---- */
@@ -1179,6 +1186,8 @@ document.getElementById("reviewForm").addEventListener("submit", (e)=>{
   document.getElementById("reviewName").value = "";
   document.getElementById("reviewMessage").value = "";
   selectedRating = 5; paintStars();
+  const ratingField = document.getElementById("reviewRatingField");
+  if (ratingField) ratingField.value = "5";
 });
 paintStars();
 
